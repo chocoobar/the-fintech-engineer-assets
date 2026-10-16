@@ -140,8 +140,13 @@ python3 export_png.py <input.html> <output.png> [--scale 2] [--window W,H]
   If the output looks clipped at the bottom, re-run with a taller height.
 - `--scale` is the device pixel ratio — default `2` for crisp embedding on
   LinkedIn; drop to `1` only for a quick low-stakes preview.
-- Requires a local Google Chrome install and Pillow (`pip install pillow`
-  if `python3 -c "import PIL"` fails).
+- Requires a local Chrome/Chromium install and Pillow (`pip install pillow`
+  if `python3 -c "import PIL"` fails). Auto-detects common install paths on
+  macOS, Windows, and Linux (including a Claude Code cloud sandbox, where
+  it also passes `--no-sandbox`, needed for headless Chrome running as
+  root in most containers). If Chrome lives somewhere none of those cover,
+  set `CHROME_PATH` (or `PUPPETEER_EXECUTABLE_PATH`) to the binary before
+  running the script.
 
 Example:
 

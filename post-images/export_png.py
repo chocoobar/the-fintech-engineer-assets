@@ -6,19 +6,42 @@ scale for crisp embedding, then autocrops the flat-white margin so the
 output fits snugly around whatever card/doc the HTML actually draws.
 """
 import argparse
+import os
 import pathlib
+import shutil
 import subprocess
 import sys
 import tempfile
 
 CHROME_CANDIDATES = [
+    # macOS
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    # Windows
     "C:/Program Files/Google/Chrome/Application/chrome.exe",
     "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+    # Linux (apt/dnf google-chrome-stable, Debian/Ubuntu chromium package,
+    # and Playwright/Puppeteer's bundled Chromium — covers most cloud
+    # sandboxes/CI containers, including a Claude Code cloud session)
+    "/usr/bin/google-chrome-stable",
+    "/usr/bin/google-chrome",
+    "/usr/bin/chromium-browser",
+    "/usr/bin/chromium",
+    "/snap/bin/chromium",
 ]
-CHROME = next(
-    (p for p in CHROME_CANDIDATES if pathlib.Path(p).exists()),
-    CHROME_CANDIDATES[0],
+
+# An explicit override always wins (set this if Chrome lives somewhere
+# none of the above or PATH lookup finds — e.g. a nonstandard sandbox
+# install).
+_env_override = os.environ.get("CHROME_PATH") or os.environ.get("PUPPETEER_EXECUTABLE_PATH")
+
+CHROME = (
+    _env_override
+    or next((p for p in CHROME_CANDIDATES if pathlib.Path(p).exists()), None)
+    or shutil.which("google-chrome-stable")
+    or shutil.which("google-chrome")
+    or shutil.which("chromium-browser")
+    or shutil.which("chromium")
+    or CHROME_CANDIDATES[0]
 )
 
 
@@ -39,6 +62,13 @@ def main():
             CHROME,
             "--headless=new",
             "--disable-gpu",
+            # Harmless on macOS/Windows; required on most Linux containers/
+            # cloud sandboxes, where Chrome usually runs as root and its
+            # sandbox refuses to start without this. We're only ever
+            # rendering our own local file:// HTML here, never browsing
+            # untrusted external content, so this doesn't weaken anything
+            # that actually matters for this use case.
+            "--no-sandbox",
             "--hide-scrollbars",
             "--force-device-scale-factor=%s" % args.scale,
             "--default-background-color=FFFFFFFF",
