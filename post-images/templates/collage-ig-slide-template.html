@@ -1,0 +1,119 @@
+<!--
+  COLLAGE IG SLIDE TEMPLATE — dark-theme editorial-collage variant of a
+  single Instagram carousel slide. Same fixed 1080x1080 square, dark
+  Ink/White-on-Ink pairing, and footer as the plain ig-slide pattern in
+  ../reconciliation-drift/ig-slide-*.html — this just adds the halftone
+  texture, film grain and torn-paper tag chip from collage-card-template.html
+  so a carousel can carry the same visual identity as a collage-style hook
+  image.
+
+  Fully worked 5-slide set: ../mcc-merchant-category-code/ig-slide-1.html
+  through ig-slide-5.html. Copy whichever slide's content shape is closest
+  to what you need rather than starting from this bare skeleton — the arc
+  that worked there:
+    1/5  Hook       — headline with a marker-highlight span + a torn tag + one dek sentence
+    2/5  Mechanism  — one compact illustration (reuse/shrink the card's SVG) with 2-4
+                      single-line leader-line callout pills instead of the card's
+                      multi-line boxes — there's much less vertical room on a square
+    3/5  Heuristic  — a big stat/rule + the band-strip chip row (or any grid payoff)
+    4/5  Detail     — a supporting grid (exceptions, a checklist, a comparison)
+    5/5  CTA        — takeaway checklist + closing question + CTA box, NO swipe cue
+                      (this is the one slide that doesn't get one)
+
+  Gotchas learned building the worked set:
+  - .content MUST be `flex:1; display:flex; flex-direction:column;
+    justify-content:center;` — never top-align with a margin-top:auto
+    footer trick, or short slides dump all their slack space into one
+    dead gap right above the footer. See ../README.md's Instagram section.
+  - The export script's autocrop diffs against a WHITE background, but
+    this slide's background is dark — autocrop can't find the true edge
+    and the raw export lands ~10-15px taller than the 1080 square. Always
+    run the center-crop safety step below after exporting; don't assume
+    the raw PNG is already square.
+  - Keep callout/pill text to one line on a slide — there isn't the
+    vertical room a card has for two-line boxes. Measure long strings
+    against the box width before shipping (SVG text doesn't wrap or clip).
+
+  Export: python3 ../export_png.py collage-ig-slide-template.html out.png --window=1080,1180
+  Then center-crop to exact square:
+    python3 -c "
+    from PIL import Image
+    im = Image.open('out.png'); w,h = im.size
+    if w != h:
+        top = (h-w)//2
+        im.crop((0, top, w, top+w)).save('out.png')
+    "
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap">
+<style>
+  :root{ --ink:#080D18; --signal:#2F55E8; --paper:#F1F3F7; --slate:#5B6472; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+
+  .slide{
+    position:relative;
+    width:1080px; height:1080px; margin:0 auto;
+    background:var(--ink); color:var(--paper);
+    padding:56px 64px 48px;
+    display:flex; flex-direction:column;
+    overflow:hidden;
+  }
+  .halftone{ position:absolute; inset:0; background-image:radial-gradient(circle, rgba(241,243,247,.16) 1px, transparent 1.4px); background-size:9px 9px; opacity:.4; pointer-events:none; }
+  .grain{ position:absolute; inset:0; width:100%; height:100%; opacity:.05; mix-blend-mode:overlay; pointer-events:none; }
+
+  .head-row{ position:relative; z-index:2; display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .mark{ width:34px; height:34px; flex-shrink:0; }
+  .card-eyebrow{ font-size:14px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .swipe{ font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--signal); }
+
+  .content{ position:relative; z-index:2; flex:1; display:flex; flex-direction:column; justify-content:center; }
+
+  .tag{
+    align-self:flex-start;
+    background:var(--paper); color:var(--ink);
+    padding:9px 18px 12px; margin-bottom:22px;
+    font-size:14px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+    transform:rotate(-2deg);
+    clip-path:polygon(0% 10%,12% 0%,26% 7%,40% 0%,54% 6%,68% 0%,82% 8%,100% 2%,96% 24%,100% 46%,94% 62%,100% 82%,97% 100%,80% 94%,62% 100%,46% 93%,30% 100%,14% 94%,0% 100%,4% 78%,0% 56%,5% 34%);
+  }
+
+  .headline{ font-size:60px; font-weight:900; line-height:1; letter-spacing:-.02em; text-transform:uppercase; color:var(--paper); margin:0; }
+  .hl-mark{ display:inline-block; background:var(--signal); color:#FFFFFF; padding:2px 14px 8px; transform:rotate(-1.2deg); border-radius:2px 12px 3px 14px; }
+
+  .dek{ margin:26px 0 0; max-width:880px; font-size:23px; font-weight:500; line-height:1.5; color:var(--slate); }
+  .dek b{ color:var(--paper); font-weight:700; }
+
+  .footer-row{
+    position:relative; z-index:2;
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:18px; border-top:1px solid rgba(241,243,247,.14);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--paper); }
+  .signature{ font-size:14px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="slide">
+  <div class="halftone"></div>
+  <svg class="grain"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>
+
+  <div class="head-row">
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#F1F3F7"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#F1F3F7"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#F1F3F7"/></g></g></svg>
+    <div style="text-align:right; display:flex; flex-direction:column; gap:5px;">
+      <div class="card-eyebrow"><!-- e.g. "Card networks · 1/5" --></div>
+      <div class="swipe">Swipe &rarr;</div> <!-- omit this div entirely on the last slide -->
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- optional: <div class="tag">...</div> -->
+    <h1 class="headline"><!-- slide headline, optionally with a <span class="hl-mark"> --></h1>
+    <p class="dek"><!-- supporting line, or replace this whole block with an
+                        illustration/grid/checklist per the arc above --></p>
+  </div>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">thefintechengineer.substack.com</div>
+  </div>
+</div>

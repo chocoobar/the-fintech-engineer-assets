@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{ --ink:#080D18; --signal:#2F55E8; --paper:#F1F3F7; --slate:#5B6472; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+  .card{ width:1080px; margin:0 auto; background:var(--paper); color:var(--ink); padding:64px 66px 48px; display:flex; flex-direction:column; gap:30px; }
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .head-copy{ display:flex; flex-direction:column; gap:10px; max-width:85%; }
+  .card-eyebrow{ font-size:15px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .card-h1{ font-size:31px; font-weight:800; line-height:1.22; letter-spacing:-.01em; color:var(--ink); text-wrap:balance; }
+  .mark{ width:36px; height:36px; flex-shrink:0; margin-top:2px; }
+  .diagram-wrap{ width:100%; }
+  .diagram-wrap svg{ display:block; width:100%; height:auto; }
+  figcaption{ margin-top:14px; font-size:17px; line-height:1.55; color:var(--slate); }
+  figcaption b{ color:var(--ink); }
+  figure{ margin:0; }
+  .footer-row{ display:flex; align-items:center; justify-content:space-between; padding-top:20px; border-top:1px solid rgba(8,13,24,.1); }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="card">
+
+  <div class="head-row">
+    <div class="head-copy">
+      <div class="card-eyebrow">The outbox pattern</div>
+      <div class="card-h1">Commit the event with the state, not after it</div>
+    </div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <figure class="diagram-wrap">
+    <svg viewBox="0 0 1080 480" role="img" aria-label="Left: without an outbox, a DB transaction and a separate Kafka publish leave a gap where the publish can fail independently. Right: with an outbox, the business state and outbox event commit together in one transaction, and a separate publisher retries delivery from the outbox.">
+
+      <rect x="40" y="30" width="470" height="420" rx="16" fill="#FFFFFF" stroke="#2F55E8" stroke-width="1.6"/>
+      <text x="275" y="66" text-anchor="middle" font-size="14" font-weight="800" letter-spacing=".06em" fill="#2F55E8">WITHOUT OUTBOX</text>
+
+      <rect x="90" y="100" width="370" height="66" rx="9" fill="#F1F3F7" stroke="#080D18" stroke-width="1.4"/>
+      <text x="275" y="140" text-anchor="middle" font-size="14" font-weight="700" fill="#080D18">DB transaction &middot; commits</text>
+
+      <line x1="275" y1="166" x2="275" y2="210" stroke="#2F55E8" stroke-width="2.2" stroke-dasharray="5 4"/>
+      <text x="330" y="192" font-size="11.5" font-weight="700" fill="#2F55E8">gap &mdash; can fail</text>
+      <text x="330" y="208" font-size="11.5" font-weight="700" fill="#2F55E8">independently</text>
+
+      <rect x="90" y="212" width="370" height="66" rx="9" fill="#F1F3F7" stroke="#080D18" stroke-width="1.4"/>
+      <text x="275" y="252" text-anchor="middle" font-size="14" font-weight="700" fill="#080D18">Kafka publish &middot; separate call</text>
+
+      <text x="275" y="330" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5B6472">If the process crashes between these</text>
+      <text x="275" y="350" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5B6472">two steps, the event is lost for good</text>
+      <text x="275" y="370" font-size="12.5" font-weight="600" fill="#5B6472" text-anchor="middle">&mdash; the business state already committed.</text>
+
+      <rect x="570" y="30" width="470" height="420" rx="16" fill="#FFFFFF" stroke="#080D18" stroke-width="1.4"/>
+      <text x="805" y="66" text-anchor="middle" font-size="14" font-weight="800" letter-spacing=".06em" fill="#080D18">WITH OUTBOX</text>
+
+      <rect x="610" y="94" width="390" height="150" rx="12" fill="#2F55E8" fill-opacity=".08" stroke="#2F55E8" stroke-width="1.6"/>
+      <text x="805" y="118" text-anchor="middle" font-size="12" font-weight="800" letter-spacing=".06em" fill="#2F55E8">ONE DB TRANSACTION</text>
+      <rect x="630" y="130" width="160" height="90" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.2"/>
+      <text x="710" y="170" text-anchor="middle" font-size="13" font-weight="700" fill="#080D18">Business</text>
+      <text x="710" y="188" text-anchor="middle" font-size="13" font-weight="700" fill="#080D18">State</text>
+      <rect x="810" y="130" width="170" height="90" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.2"/>
+      <text x="895" y="170" text-anchor="middle" font-size="13" font-weight="700" fill="#080D18">Outbox</text>
+      <text x="895" y="188" text-anchor="middle" font-size="13" font-weight="700" fill="#080D18">Event</text>
+
+      <defs>
+        <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 Z" fill="#080D18"/>
+        </marker>
+      </defs>
+      <line x1="805" y1="246" x2="805" y2="290" stroke="#080D18" stroke-width="1.6" marker-end="url(#arrO)"/>
+
+      <rect x="655" y="292" width="300" height="60" rx="9" fill="#F1F3F7" stroke="#080D18" stroke-width="1.2"/>
+      <text x="805" y="326" text-anchor="middle" font-size="13" font-weight="700" fill="#080D18">Outbox Publisher &middot; retries</text>
+
+      <line x1="805" y1="352" x2="805" y2="392" stroke="#080D18" stroke-width="1.6" marker-end="url(#arrO)"/>
+      <rect x="740" y="394" width="130" height="46" rx="9" fill="#2F55E8" fill-opacity=".1" stroke="#2F55E8" stroke-width="1.4"/>
+      <text x="805" y="422" text-anchor="middle" font-size="13" font-weight="800" fill="#2F55E8">Kafka</text>
+
+    </svg>
+
+    <figcaption>The publisher can retry as many times as it needs &mdash; the event is durable the moment the transaction commits, so a slow or failing Kafka never means a <b>lost</b> business event, only a <b>delayed</b> one.</figcaption>
+  </figure>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">thefintechengineer.substack.com</div>
+  </div>
+
+</div>

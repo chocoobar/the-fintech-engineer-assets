@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{
+    font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
+  }
+
+  .doc{
+    width:920px;
+    margin:0 auto;
+    background:var(--paper);
+    color:var(--ink);
+    padding:80px 84px 56px;
+    display:flex;
+    flex-direction:column;
+    gap:34px;
+  }
+
+  .head-row{ display:flex; align-items:center; justify-content:space-between; }
+  .card-eyebrow{ font-size:14px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .mark{ width:32px; height:32px; }
+
+  .quote{
+    font-size:52px; font-weight:800; line-height:1.14; letter-spacing:-0.015em;
+    text-wrap:balance; color:var(--ink); margin:0;
+  }
+  .quote::before{ content:"\201C"; color:var(--signal); }
+  .quote::after{ content:"\201D"; color:var(--signal); }
+
+  .lede{ font-size:20px; font-weight:600; line-height:1.5; color:var(--ink); margin:0; max-width:60ch; }
+
+  .body-copy{ display:flex; flex-direction:column; gap:22px; font-size:18px; line-height:1.68; color:#1E2530; max-width:64ch; }
+  .body-copy p{ margin:0; }
+  .body-copy b{ color:var(--ink); }
+  .body-copy em{ font-style:italic; color:var(--ink); }
+
+  .fix-block{
+    display:flex; flex-direction:column; gap:16px;
+    background:rgba(47,85,232,0.07); border:1px solid rgba(47,85,232,0.22);
+    border-radius:16px; padding:26px 28px;
+  }
+  .fix-block .fix-title{ font-size:17px; font-weight:700; color:var(--ink); }
+  .fix-item{ display:flex; gap:12px; align-items:flex-start; }
+  .fix-item .arrow{ color:var(--signal); font-weight:800; font-size:18px; line-height:1.6; flex-shrink:0; }
+  .fix-item p{ margin:0; font-size:16.5px; line-height:1.6; color:#1E2530; }
+  .fix-item b{ color:var(--ink); }
+
+  .closer{ font-size:18px; line-height:1.6; color:var(--ink); font-weight:600; max-width:64ch; margin:0; }
+  .tags{ font-size:15px; font-weight:600; color:var(--signal); letter-spacing:.01em; }
+
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:26px; border-top:1px solid rgba(8,13,24,.1);
+  }
+  .wordmark{ font-size:15px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:15px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="doc">
+
+  <div class="head-row">
+    <div class="card-eyebrow">The Fintech Engineer &middot; Field Notes</div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <p class="quote">Two systems can each be correct &mdash; and still disagree.</p>
+  <p class="lede">Reconciliation breaks are rarely caused by a bug. They're caused by exactly that.</p>
+
+  <div class="body-copy">
+    <p>Here's the trace:</p>
+    <p>A customer pays $10,000 by card. The moment the gateway's webhook says &ldquo;success,&rdquo; your ledger marks the transaction captured at $10,000 &mdash; the full amount the customer was charged. Nothing failed. Your ledger is correct.</p>
+    <p>Two days later, the gateway's settlement batch actually credits your bank account. But it doesn't credit $10,000 &mdash; it credits $9,800, after deducting its ~2% MDR fee up front. The gateway's settlement file is also correct; it was always going to net the fee before payout, that's contractually how it works.</p>
+    <p>Neither system is wrong. But your ledger says $10,000 and your bank account says $9,800, and unless your reconciliation logic explicitly accounts for the fee, that <b>$200 gap</b> looks unexplained. Now multiply this by partial captures, refunds issued from the gateway's dashboard your system never got a webhook for, FX conversions the gateway snapshots at its own rate and timestamp, and a settlement batch that runs T+2 instead of same-day &mdash; and you get a drift that compounds daily and doesn't announce itself as an error anywhere.</p>
+  </div>
+
+  <div class="fix-block">
+    <div class="fix-title">What a real EOD recon job needs to catch this:</div>
+
+    <div class="fix-item"><span class="arrow">&rarr;</span><p><b>Three-way matching, not two.</b> Comparing your ledger against the gateway's report isn't enough &mdash; you also need the actual bank statement.</p></div>
+
+    <div class="fix-item"><span class="arrow">&rarr;</span><p><b>Match on a stable identifier</b>, not amount-and-date heuristics &mdash; the gateway's transaction reference, the same id your idempotency key should already be tracking.</p></div>
+
+    <div class="fix-item"><span class="arrow">&rarr;</span><p><b>A rolling window, not a same-day cutoff.</b> Settlement lag (T+1, T+2) means a transaction legitimately won't match today and will match cleanly tomorrow.</p></div>
+
+    <div class="fix-item"><span class="arrow">&rarr;</span><p><b>Unresolved breaks post to a suspense account</b>, not just an alert someone dismisses &mdash; keeping the books balanced while it's investigated.</p></div>
+  </div>
+
+  <p class="closer">Recon isn't a batch job you write once. The day you add a new payment method, a new PSP, or change a fee structure, an assumption baked into your matching logic quietly stops holding &mdash; and the drift comes back in a new shape.</p>
+
+  <p class="closer" style="font-weight:500;">Has a recon break in your system ever turned out to be a legit settlement-lag or fee difference that got misclassified as fraud or a bug before someone caught it?</p>
+
+  <p class="tags">#fintech &nbsp;#softwareengineering &nbsp;#systemdesign &nbsp;#payments &nbsp;#reconciliation</p>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">linkedin.com/company/the-fintech-engineer</div>
+  </div>
+
+</div>

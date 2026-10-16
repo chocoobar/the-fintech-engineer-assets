@@ -1,0 +1,12 @@
+Your balance says $10,000. Your system approved $14,000. Both reads were correct. 👀
+
+That's the trap with "eventually consistent" — it's a great answer for a dashboard that's a few seconds stale. It's a dangerous answer for a balance that can't briefly allow spending money that isn't there.
+
+Swipe through for the mechanism → the fix → the one gotcha most teams miss (hint: Kafka doesn't save you here). 👉
+
+Full breakdown link in bio.
+
+.
+.
+.
+#fintech #distributedsystems #softwareengineering #systemdesign #payments #backenddevelopment #softwarearchitecture #techeducation

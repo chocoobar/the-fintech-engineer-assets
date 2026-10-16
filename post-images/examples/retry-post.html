@@ -1,0 +1,148 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{
+    font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
+  }
+
+  /* Flat, full-bleed export: no shadow, no radius, no surrounding margin —
+     this IS the uploadable asset, edge to edge. */
+  .doc{
+    width:920px;
+    margin:0 auto;
+    background:var(--paper);
+    color:var(--ink);
+    padding:80px 84px 56px;
+    display:flex;
+    flex-direction:column;
+    gap:34px;
+  }
+
+  .head-row{ display:flex; align-items:center; justify-content:space-between; }
+  .card-eyebrow{ font-size:14px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .mark{ width:32px; height:32px; }
+
+  .quote{
+    font-size:52px;
+    font-weight:800;
+    line-height:1.14;
+    letter-spacing:-0.015em;
+    text-wrap:balance;
+    color:var(--ink);
+    margin:0;
+  }
+  .quote::before{ content:"\201C"; color:var(--signal); }
+  .quote::after{ content:"\201D"; color:var(--signal); }
+
+  .lede{
+    font-size:20px;
+    font-weight:600;
+    line-height:1.5;
+    color:var(--ink);
+    margin:0;
+    max-width:60ch;
+  }
+
+  .body-copy{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    font-size:18px;
+    line-height:1.68;
+    color:#1E2530;
+    max-width:64ch;
+  }
+  .body-copy p{ margin:0; }
+  .body-copy b{ color:var(--ink); }
+  .body-copy em{ font-style:italic; color:var(--ink); }
+
+  .fix-block{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    background:rgba(47,85,232,0.07);
+    border:1px solid rgba(47,85,232,0.22);
+    border-radius:16px;
+    padding:26px 28px;
+  }
+  .fix-block .fix-title{ font-size:17px; font-weight:700; color:var(--ink); }
+  .fix-item{ display:flex; gap:12px; align-items:flex-start; }
+  .fix-item .arrow{ color:var(--signal); font-weight:800; font-size:18px; line-height:1.6; flex-shrink:0; }
+  .fix-item p{ margin:0; font-size:16.5px; line-height:1.6; color:#1E2530; }
+  .fix-item b{ color:var(--ink); }
+
+  .closer{
+    font-size:18px;
+    line-height:1.6;
+    color:var(--ink);
+    font-weight:600;
+    max-width:64ch;
+    margin:0;
+  }
+
+  .tags{
+    font-size:15px;
+    font-weight:600;
+    color:var(--signal);
+    letter-spacing:.01em;
+  }
+
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:26px; border-top:1px solid rgba(8,13,24,.1);
+  }
+  .wordmark{ font-size:15px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:15px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="doc">
+
+  <div class="head-row">
+    <div class="card-eyebrow">The Fintech Engineer &middot; Field Notes</div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <p class="quote">Just add a retry.</p>
+  <p class="lede">It's one of the most dangerous sentences in payments engineering &mdash; and almost nobody says it maliciously. It just sounds harmless.</p>
+
+  <div class="body-copy">
+    <p>Here's why it isn't.</p>
+    <p>In most systems, a timeout means &ldquo;that failed, try again.&rdquo; In payments, a timeout means something narrower and much more dangerous: <b>&ldquo;I don't know what happened.&rdquo;</b> Those are two different problems, and treating them the same is where the damage happens.</p>
+    <p>Walk through the trace (image below):</p>
+    <p>A client sends a debit request for $500. The payment gateway forwards it to the core ledger. The ledger processes it, posts the debit, and sends back a 200 OK.</p>
+    <p>That response never makes it back to the client. Network blip, load balancer hiccup, doesn't matter &mdash; the request <em>succeeded</em>, but the confirmation didn't survive the trip home.</p>
+    <p>The client sees nothing. No error, no confirmation &mdash; just silence. So it does the &ldquo;safe&rdquo; thing: it retries. Same request. Same amount. No idempotency key to say &ldquo;you've seen this before.&rdquo;</p>
+    <p>The gateway has no way to know this is a repeat. It forwards the request again. The ledger &mdash; doing exactly what it's designed to do &mdash; posts a second, perfectly valid debit.</p>
+    <p>End state: two successful transactions, $1,000 debited for a $500 purchase, and not a single exception thrown anywhere in the stack. No alert fires, because nothing here looks like a failure. It looks like two customers making two payments.</p>
+    <p>That's what makes this bug class so dangerous &mdash; it doesn't crash. It just quietly moves money.</p>
+  </div>
+
+  <div class="fix-block">
+    <div class="fix-title">The fix isn't &ldquo;don't retry.&rdquo; Distributed systems fail constantly; retries are necessary for recovery. The fix is refusing to let a retry be a blind repeat of an ambiguous request:</div>
+
+    <div class="fix-item"><span class="arrow">&rarr;</span><p>Treat &ldquo;no response&rdquo; as <b>unknown</b>, never as <b>failed</b>.</p></div>
+
+    <div class="fix-item"><span class="arrow">&rarr;</span><p><b>The caller generates the idempotency key &mdash; not the server.</b> Whatever initiates the request (the mobile app, the web client, or the upstream service on a server-to-server call) creates a unique key, usually a UUID, at the exact moment the action is triggered &mdash; the &ldquo;pay now&rdquo; tap, not the HTTP call. That same key rides along on every retry of that <b>same</b> logical request. The server's job is simple: look the key up first. Seen it before? Return the original result. Never seen it? Process it, and store the result against that key.</p></div>
+
+    <div class="fix-item"><span class="arrow">&rarr;</span><p>Make the ledger the single source of truth. Before retrying, ask it what already happened &mdash; don't just resend and hope.</p></div>
+  </div>
+
+  <p class="closer">The hard part was never the retry logic. It's the idempotency guarantee underneath it &mdash; and in my experience, that guarantee rarely gets built proactively. It gets built the week after the first customer complaint about being charged twice.</p>
+
+  <p class="closer" style="font-weight:500;">If you've lived through a version of this trace, I'd like to hear which step broke it for you.</p>
+
+  <p class="tags">#fintech &nbsp;#paymentsengineering &nbsp;#distributedsystems &nbsp;#softwareengineering &nbsp;#systemdesign</p>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">linkedin.com/company/the-fintech-engineer</div>
+  </div>
+
+</div>

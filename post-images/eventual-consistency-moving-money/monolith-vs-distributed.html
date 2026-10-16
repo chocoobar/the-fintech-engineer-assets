@@ -1,0 +1,100 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{ --ink:#080D18; --signal:#2F55E8; --paper:#F1F3F7; --slate:#5B6472; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+  .card{ width:1080px; margin:0 auto; background:var(--paper); color:var(--ink); padding:64px 66px 48px; display:flex; flex-direction:column; gap:30px; }
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .head-copy{ display:flex; flex-direction:column; gap:10px; max-width:85%; }
+  .card-eyebrow{ font-size:15px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .card-h1{ font-size:31px; font-weight:800; line-height:1.22; letter-spacing:-.01em; color:var(--ink); text-wrap:balance; }
+  .mark{ width:36px; height:36px; flex-shrink:0; margin-top:2px; }
+  .diagram-wrap{ width:100%; }
+  .diagram-wrap svg{ display:block; width:100%; height:auto; }
+  figcaption{ margin-top:14px; font-size:17px; line-height:1.55; color:var(--slate); }
+  figcaption b{ color:var(--ink); }
+  figure{ margin:0; }
+  .footer-row{ display:flex; align-items:center; justify-content:space-between; padding-top:20px; border-top:1px solid rgba(8,13,24,.1); }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="card">
+
+  <div class="head-row">
+    <div class="head-copy">
+      <div class="card-eyebrow">The distributed systems reality</div>
+      <div class="card-h1">One atomic write becomes four independent failure domains</div>
+    </div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <figure class="diagram-wrap">
+    <svg viewBox="0 0 1080 480" role="img" aria-label="Left panel shows a monolith as one atomic transaction combining debit, transaction update, balance update and ledger record. Right panel shows a distributed Payment Service fanning out to four separate services, each with its own database and failure mode: Ledger, Notification, Analytics, Reconciliation.">
+
+      <rect x="40" y="30" width="460" height="420" rx="16" fill="#FFFFFF" stroke="#080D18" stroke-width="1.4"/>
+      <text x="270" y="66" text-anchor="middle" font-size="14" font-weight="800" letter-spacing=".1em" fill="#5B6472">MONOLITH</text>
+      <rect x="80" y="180" width="380" height="150" rx="10" fill="#F1F3F7" stroke="#080D18" stroke-width="1.4"/>
+      <g font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#080D18">
+        <text x="270" y="215" text-anchor="middle">Debit money</text>
+        <text x="270" y="240" text-anchor="middle">+ Update transaction</text>
+        <text x="270" y="265" text-anchor="middle">+ Update balance</text>
+        <text x="270" y="290" text-anchor="middle">+ Record ledger</text>
+      </g>
+      <line x1="140" y1="300" x2="400" y2="300" stroke="#080D18" stroke-width="1.2"/>
+      <text x="270" y="318" text-anchor="middle" font-size="13" font-weight="800" fill="#2F55E8">= ONE transaction</text>
+      <text x="270" y="400" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5B6472">single database, single commit,</text>
+      <text x="270" y="418" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5B6472">nothing to reconcile</text>
+
+      <rect x="580" y="30" width="460" height="420" rx="16" fill="#FFFFFF" stroke="#2F55E8" stroke-width="1.6"/>
+      <text x="810" y="66" text-anchor="middle" font-size="14" font-weight="800" letter-spacing=".1em" fill="#2F55E8">DISTRIBUTED</text>
+
+      <rect x="710" y="86" width="200" height="46" rx="9" fill="#2F55E8" fill-opacity=".1" stroke="#2F55E8" stroke-width="1.4"/>
+      <text x="810" y="114" text-anchor="middle" font-size="13.5" font-weight="700" fill="#080D18">Payment Service</text>
+
+      <defs>
+        <marker id="arrM" markerWidth="8" markerHeight="8" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 Z" fill="#080D18"/>
+        </marker>
+      </defs>
+
+      <g stroke="#080D18" stroke-width="1.4" marker-end="url(#arrM)">
+        <path d="M780,132 L640,220" fill="none"/>
+        <path d="M800,132 L760,220" fill="none"/>
+        <path d="M820,132 L860,220" fill="none"/>
+        <path d="M840,132 L980,220" fill="none"/>
+      </g>
+
+      <g font-family="Inter, sans-serif">
+        <rect x="610" y="222" width="120" height="66" rx="9" fill="#F1F3F7" stroke="#080D18" stroke-width="1.2"/>
+        <text x="670" y="250" text-anchor="middle" font-size="12.5" font-weight="700" fill="#080D18">Ledger</text>
+        <text x="670" y="268" text-anchor="middle" font-size="10" font-weight="600" fill="#5B6472">own DB</text>
+
+        <rect x="750" y="222" width="120" height="66" rx="9" fill="#F1F3F7" stroke="#080D18" stroke-width="1.2"/>
+        <text x="810" y="250" text-anchor="middle" font-size="12.5" font-weight="700" fill="#080D18">Notification</text>
+        <text x="810" y="268" text-anchor="middle" font-size="10" font-weight="600" fill="#5B6472">own DB</text>
+
+        <rect x="890" y="222" width="90" height="66" rx="9" fill="#F1F3F7" stroke="#080D18" stroke-width="1.2"/>
+        <text x="935" y="250" text-anchor="middle" font-size="12.5" font-weight="700" fill="#080D18">Analytics</text>
+        <text x="935" y="268" text-anchor="middle" font-size="10" font-weight="600" fill="#5B6472">own DB</text>
+
+        <rect x="750" y="310" width="180" height="60" rx="9" fill="#F1F3F7" stroke="#080D18" stroke-width="1.2"/>
+        <text x="840" y="336" text-anchor="middle" font-size="12.5" font-weight="700" fill="#080D18">Reconciliation</text>
+        <text x="840" y="354" text-anchor="middle" font-size="10" font-weight="600" fill="#5B6472">own schedule, own failure mode</text>
+      </g>
+
+      <text x="810" y="410" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2F55E8">four commits, four clocks,</text>
+      <text x="810" y="428" text-anchor="middle" font-size="12.5" font-weight="700" fill="#2F55E8">no shared transaction boundary</text>
+
+    </svg>
+
+    <figcaption>Splitting responsibilities is what lets a system scale &mdash; but it also means the guarantee <b>"debit and ledger happen together"</b> no longer comes free from the database. Something has to decide, deliberately, which of these four still has to agree immediately.</figcaption>
+  </figure>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">thefintechengineer.substack.com</div>
+  </div>
+
+</div>

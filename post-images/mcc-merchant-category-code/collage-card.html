@@ -1,0 +1,260 @@
+<!--
+  EDITORIAL-COLLAGE CARD — sample/experimental variant for the MCC post.
+  Same brand tokens and footer as card-template.html, pushed into a denser,
+  annotated-dossier layout (halftone texture, torn-edge illustration panel,
+  leader-line callouts, marker-highlight headline) instead of the usual
+  clean single-diagram card. Signal blue stands in for the "one accent
+  marker sweep" — never neon yellow, per brand-guide.pdf.
+  Export: python3 ../export_png.py collage-card.html collage-card.png --window=1080,2600
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+
+  .card{
+    position:relative;
+    width:1080px;
+    margin:0 auto;
+    background:var(--paper);
+    color:var(--ink);
+    padding:60px 66px 48px;
+    display:flex;
+    flex-direction:column;
+    gap:34px;
+    overflow:hidden;
+  }
+
+  /* full-bleed film grain, sits above everything, purely decorative */
+  .grain{
+    position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:5;
+    opacity:.05; mix-blend-mode:multiply;
+  }
+
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .head-copy{ display:flex; flex-direction:column; gap:8px; }
+  .card-eyebrow{ font-size:14px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--signal); }
+  .card-tag{ font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--slate); }
+  .mark{ width:36px; height:36px; flex-shrink:0; margin-top:2px; }
+
+  .headline{
+    font-size:76px;
+    font-weight:900;
+    line-height:.98;
+    letter-spacing:-.02em;
+    text-transform:uppercase;
+    color:var(--ink);
+    margin:0;
+  }
+  .hl-mark{
+    display:inline-block;
+    background:var(--signal);
+    color:#FFFFFF;
+    padding:2px 14px 8px;
+    margin-left:2px;
+    transform:rotate(-1.2deg);
+    border-radius:2px 12px 3px 14px;
+  }
+
+  .dek{
+    max-width:760px;
+    font-size:20px;
+    font-weight:500;
+    line-height:1.5;
+    color:var(--slate);
+  }
+  .dek b{ color:var(--ink); font-weight:700; }
+
+  /* ---- torn-edge illustration panel ---- */
+  .panel-wrap{ position:relative; width:100%; }
+  .torn-shadow{
+    position:absolute;
+    top:9px; left:9px; right:-9px; bottom:-9px;
+    background:var(--ink);
+    clip-path:polygon(0% 2%,3% 0%,9% 1.5%,15% 0%,22% 1%,30% 0%,38% 1.2%,46% 0%,55% 1%,63% 0%,71% 1.4%,79% 0%,87% 1%,94% 0%,100% 1.5%,100% 8%,99% 15%,100% 23%,99% 31%,100% 40%,99% 48%,100% 57%,99% 65%,100% 74%,99% 82%,100% 90%,99% 97%,100% 100%,92% 99%,85% 100%,77% 99%,69% 100%,61% 99%,53% 100%,45% 99%,37% 100%,29% 99%,21% 100%,13% 99%,6% 100%,0% 99%,1% 91%,0% 83%,1% 75%,0% 67%,1% 59%,0% 51%,1% 43%,0% 35%,1% 27%,0% 19%,1% 11%,0% 4%);
+  }
+  .torn-panel{
+    position:relative;
+    background:var(--ink);
+    clip-path:polygon(0% 2%,3% 0%,9% 1.5%,15% 0%,22% 1%,30% 0%,38% 1.2%,46% 0%,55% 1%,63% 0%,71% 1.4%,79% 0%,87% 1%,94% 0%,100% 1.5%,100% 8%,99% 15%,100% 23%,99% 31%,100% 40%,99% 48%,100% 57%,99% 65%,100% 74%,99% 82%,100% 90%,99% 97%,100% 100%,92% 99%,85% 100%,77% 99%,69% 100%,61% 99%,53% 100%,45% 99%,37% 100%,29% 99%,21% 100%,13% 99%,6% 100%,0% 99%,1% 91%,0% 83%,1% 75%,0% 67%,1% 59%,0% 51%,1% 43%,0% 35%,1% 27%,0% 19%,1% 11%,0% 4%);
+  }
+  .torn-panel svg{ display:block; width:100%; height:auto; }
+
+  .caption{ margin:-14px 0 0; font-size:16px; line-height:1.55; color:var(--slate); }
+  .caption b{ color:var(--ink); }
+
+  /* ---- leading-digit band strip ---- */
+  .band-label{ font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--slate); margin-bottom:12px; }
+  .band-strip{ display:flex; gap:8px; }
+  .chip{
+    flex:1;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:4px;
+    background:#FFFFFF;
+    border:1.5px solid rgba(8,13,24,.14);
+    border-radius:10px;
+    padding:12px 4px 10px;
+  }
+  .chip.hot{ background:var(--signal); border-color:var(--signal); }
+  .chip .digit{ font-size:22px; font-weight:800; color:var(--ink); }
+  .chip.hot .digit{ color:#FFFFFF; }
+  .chip .lbl{ font-size:9.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--slate); text-align:center; }
+  .chip.hot .lbl{ color:#FFFFFF; opacity:.92; }
+
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:20px; border-top:1px solid rgba(8,13,24,.1);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="card">
+
+  <svg class="grain" xmlns="http://www.w3.org/2000/svg">
+    <filter id="grainFilter"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter>
+    <rect width="100%" height="100%" filter="url(#grainFilter)"/>
+  </svg>
+
+  <div class="head-row">
+    <div class="head-copy">
+      <div class="card-eyebrow">Field notes &middot; card networks</div>
+      <div class="card-tag">ISO 8583 &middot; field 18 &nbsp;&middot;&nbsp; ~700 codes, standardized</div>
+    </div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <h1 class="headline">The <span class="hl-mark">four&nbsp;digits</span><br>nobody sees</h1>
+
+  <p class="dek">Two people order the same <b>$42</b> dinner tonight. One earns 4x points, the other 1x &mdash; decided the moment their merchant signed up with an acquirer, not by anything that happens at the table.</p>
+
+  <div class="panel-wrap">
+    <div class="torn-shadow"></div>
+    <div class="torn-panel">
+      <svg viewBox="0 0 960 600" role="img" aria-label="Illustration of a payment terminal with a card dipped in, a receipt printing the code 5812 circled in blue, and three annotated callouts pointing to the rewards engine, fraud model and interchange systems that each read that code differently.">
+        <defs>
+          <pattern id="halftoneP" width="9" height="9" patternUnits="userSpaceOnUse">
+            <circle cx="4.5" cy="4.5" r="1.6" fill="#F1F3F7"/>
+          </pattern>
+          <radialGradient id="burstFade" cx="50%" cy="50%" r="55%">
+            <stop offset="0%" stop-color="#F1F3F7" stop-opacity=".22"/>
+            <stop offset="100%" stop-color="#F1F3F7" stop-opacity="0"/>
+          </radialGradient>
+          <marker id="leadDot" markerWidth="8" markerHeight="8" refX="4" refY="4"><circle cx="4" cy="4" r="3.4" fill="#F1F3F7"/></marker>
+        </defs>
+
+        <rect width="960" height="600" fill="#080D18"/>
+        <rect width="960" height="600" fill="url(#halftoneP)" opacity=".05"/>
+
+        <!-- impact burst behind the terminal -->
+        <g transform="translate(300,300)" opacity=".8">
+          <circle r="230" fill="url(#burstFade)"/>
+          <g stroke="#2F55E8" stroke-width="2" opacity=".35">
+            <line x1="0" y1="-260" x2="0" y2="-190"/>
+            <line x1="184" y1="-184" x2="134" y2="-134"/>
+            <line x1="260" y1="0" x2="190" y2="0"/>
+            <line x1="184" y1="184" x2="134" y2="134"/>
+            <line x1="-184" y1="184" x2="-134" y2="134"/>
+            <line x1="-260" y1="0" x2="-190" y2="0"/>
+            <line x1="-184" y1="-184" x2="-134" y2="-134"/>
+          </g>
+        </g>
+
+        <!-- terminal -->
+        <g transform="translate(150,120)">
+          <rect x="0" y="0" width="270" height="360" rx="24" fill="#F1F3F7"/>
+          <rect x="26" y="34" width="218" height="118" rx="10" fill="#2F55E8"/>
+          <text x="135" y="90" text-anchor="middle" font-family="Inter, sans-serif" font-size="34" font-weight="800" fill="#FFFFFF">$42.00</text>
+          <text x="135" y="118" text-anchor="middle" font-family="Inter, sans-serif" font-size="12.5" font-weight="700" fill="#FFFFFF" opacity=".85" letter-spacing="1.5">AUTHORIZING&#8230;</text>
+          <rect x="26" y="176" width="218" height="16" rx="5" fill="#080D18" opacity=".35"/>
+          <circle cx="70" cy="222" r="13" fill="#080D18" opacity=".75"/>
+          <circle cx="112" cy="222" r="13" fill="#080D18" opacity=".75"/>
+          <circle cx="154" cy="222" r="13" fill="#080D18" opacity=".75"/>
+          <circle cx="196" cy="222" r="13" fill="#080D18" opacity=".75"/>
+        </g>
+
+        <!-- card, dipped into the slot -->
+        <g transform="translate(300,258) rotate(-8)">
+          <rect x="0" y="0" width="166" height="104" rx="12" fill="#F1F3F7" stroke="#2F55E8" stroke-width="3"/>
+          <rect x="0" y="22" width="166" height="16" fill="#080D18" opacity=".8"/>
+          <rect x="16" y="60" width="70" height="9" rx="4" fill="#080D18" opacity=".3"/>
+          <rect x="16" y="76" width="46" height="9" rx="4" fill="#080D18" opacity=".3"/>
+        </g>
+
+        <!-- torn receipt: solid rectangle with a zigzag torn bottom edge, wide -->
+        <!-- enough that the printed code never spills off the white paper -->
+        <path d="M195,432 L526,432 L526,566 L508,580 L490,566 L472,580 L454,566 L436,580 L418,566 L400,580 L382,566 L364,580 L346,566 L328,580 L310,566 L292,580 L274,566 L256,580 L238,566 L220,580 L202,566 L195,572 Z" fill="#FFFFFF"/>
+        <g>
+          <rect x="222" y="454" width="150" height="7" rx="3" fill="#080D18" opacity=".18"/>
+          <rect x="222" y="472" width="120" height="7" rx="3" fill="#080D18" opacity=".18"/>
+          <text x="222" y="507" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#080D18" opacity=".55" letter-spacing="1">MCC</text>
+          <text x="222" y="548" font-family="Inter, sans-serif" font-size="40" font-weight="900" fill="#2F55E8">5812</text>
+        </g>
+        <ellipse cx="290" cy="533" rx="88" ry="33" fill="none" stroke="#2F55E8" stroke-width="4" transform="rotate(-3 290 533)"/>
+        <path d="M378 536 L416 536" stroke="#2F55E8" stroke-width="3" marker-end="url(#leadDot)"/>
+
+        <!-- callout: rewards -->
+        <line x1="260" y1="90" x2="150" y2="46" stroke="#F1F3F7" stroke-width="1.6" stroke-dasharray="2 5" opacity=".6"/>
+        <circle cx="260" cy="90" r="4" fill="#2F55E8"/>
+        <g transform="translate(40,-10)">
+          <rect x="0" y="0" width="212" height="70" rx="8" fill="#F1F3F7"/>
+          <rect x="0" y="0" width="5" height="70" rx="2" fill="#2F55E8"/>
+          <text x="18" y="26" font-family="Inter, sans-serif" font-size="14" font-weight="800" fill="#080D18" letter-spacing=".02em">REWARDS ENGINE</text>
+          <text x="18" y="47" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#5B6472">5812/5813/5814</text>
+          <text x="18" y="62" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#5B6472">&#8594; 4x on dining, not what's in the cart</text>
+        </g>
+
+        <!-- callout: fraud -->
+        <line x1="430" y1="290" x2="700" y2="100" stroke="#F1F3F7" stroke-width="1.6" stroke-dasharray="2 5" opacity=".6"/>
+        <circle cx="430" cy="290" r="4" fill="#2F55E8"/>
+        <g transform="translate(660,60)">
+          <rect x="0" y="0" width="230" height="70" rx="8" fill="#F1F3F7"/>
+          <rect x="0" y="0" width="5" height="70" rx="2" fill="#2F55E8"/>
+          <text x="18" y="26" font-family="Inter, sans-serif" font-size="14" font-weight="800" fill="#080D18">FRAUD MODEL</text>
+          <text x="18" y="47" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#5B6472">unfamiliar MCC + amount spike</text>
+          <text x="18" y="62" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#5B6472">&#8594; triggers step-up or a decline</text>
+        </g>
+
+        <!-- callout: interchange -->
+        <line x1="360" y1="530" x2="615" y2="500" stroke="#F1F3F7" stroke-width="1.6" stroke-dasharray="2 5" opacity=".6"/>
+        <circle cx="360" cy="530" r="4" fill="#2F55E8"/>
+        <g transform="translate(600,468)">
+          <rect x="0" y="0" width="290" height="70" rx="8" fill="#F1F3F7"/>
+          <rect x="0" y="0" width="5" height="70" rx="2" fill="#2F55E8"/>
+          <text x="18" y="26" font-family="Inter, sans-serif" font-size="14" font-weight="800" fill="#080D18">INTERCHANGE</text>
+          <text x="18" y="47" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#5B6472">sets the swipe-fee tier</text>
+          <text x="18" y="62" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#5B6472">&#8594; baked into the category, not the deal</text>
+        </g>
+
+      </svg>
+    </div>
+  </div>
+  <p class="caption">One code, assigned to the <b>merchant</b> at signup, read three different ways off the same swipe &mdash; rewards, fraud and interchange each decide something different from field 18 of the same ISO 8583 message.</p>
+
+  <div>
+    <div class="band-label">The heuristic: place any MCC by its leading digit</div>
+    <div class="band-strip">
+      <div class="chip"><div class="digit">0&ndash;2</div><div class="lbl">Agri &amp; contract</div></div>
+      <div class="chip"><div class="digit">3</div><div class="lbl">Travel</div></div>
+      <div class="chip"><div class="digit">4</div><div class="lbl">Transport</div></div>
+      <div class="chip hot"><div class="digit">5</div><div class="lbl">Retail &amp; dining</div></div>
+      <div class="chip"><div class="digit">6</div><div class="lbl">Financial</div></div>
+      <div class="chip"><div class="digit">7</div><div class="lbl">Services</div></div>
+      <div class="chip"><div class="digit">8</div><div class="lbl">Professional</div></div>
+      <div class="chip"><div class="digit">9</div><div class="lbl">Government</div></div>
+    </div>
+  </div>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">linkedin.com/company/the-fintech-engineer</div>
+  </div>
+
+</div>

@@ -1,0 +1,13 @@
+One of the more expensive lessons I keep relearning in fintech systems: eventual consistency is a fine trade-off — until it touches money.
+
+Here's the mechanism I wrote about this week: two instances of a payment service read the same $10,000 balance, both approve a $7,000 withdrawal, both commit. Nothing crashes. No exception fires. $14,000 walks out against $10,000 available.
+
+The bug isn't either instance. It's treating "eventually consistent" as one setting for the whole system instead of asking, deliberately, which invariants are allowed to lag and which one absolutely cannot.
+
+In the full piece I get into where that boundary should actually sit, why "read → decide → write" is usually the real defect (not the database, not Kafka), and why a transactional outbox earns its keep. Link below.
+
+Curious where this has bitten people in their own systems — has an "eventually consistent" assumption ever quietly let something break before reconciliation caught it?
+
+👇 thefintechengineer.substack.com
+
+#fintech #distributedsystems #softwareengineering #systemdesign #payments

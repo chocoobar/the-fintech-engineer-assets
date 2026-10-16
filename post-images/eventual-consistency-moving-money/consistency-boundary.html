@@ -1,0 +1,103 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{
+    font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
+  }
+
+  .card{
+    width:1080px;
+    margin:0 auto;
+    background:var(--paper);
+    color:var(--ink);
+    padding:64px 66px 48px;
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+  }
+
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .head-copy{ display:flex; flex-direction:column; gap:10px; max-width:85%; }
+  .card-eyebrow{ font-size:15px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .card-h1{ font-size:31px; font-weight:800; line-height:1.22; letter-spacing:-.01em; color:var(--ink); text-wrap:balance; }
+  .mark{ width:36px; height:36px; flex-shrink:0; margin-top:2px; }
+
+  .diagram-wrap{ width:100%; }
+  .diagram-wrap svg{ display:block; width:100%; height:auto; }
+  figcaption{ margin-top:14px; font-size:17px; line-height:1.55; color:var(--slate); }
+  figcaption b{ color:var(--ink); }
+  figure{ margin:0; }
+
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:20px; border-top:1px solid rgba(8,13,24,.1);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="card">
+
+  <div class="head-row">
+    <div class="head-copy">
+      <div class="card-eyebrow">Consistency boundary &middot; draw it around invariants, not services</div>
+      <div class="card-h1">Not every piece of financial state needs the same guarantee</div>
+    </div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <figure class="diagram-wrap">
+    <svg viewBox="0 0 1080 500" role="img" aria-label="A small inner boundary labeled strongly consistent containing transaction state, account balance, and idempotency keys, inside a larger outer boundary labeled eventually consistent containing notifications, analytics, search, and reporting.">
+
+      <rect x="40" y="30" width="1000" height="440" rx="18" fill="#FFFFFF" stroke="#080D18" stroke-width="1.4" stroke-dasharray="6 5"/>
+      <text x="70" y="66" font-size="14" font-weight="700" letter-spacing=".08em" fill="#5B6472">EVENTUALLY CONSISTENT &middot; can lag, can catch up later</text>
+
+      <g font-family="Inter, sans-serif">
+        <rect x="80" y="380" width="200" height="56" rx="10" fill="#F1F3F7" stroke="#5B6472" stroke-width="1.2"/>
+        <text x="180" y="413" text-anchor="middle" font-size="14" font-weight="700" fill="#080D18">Notifications</text>
+
+        <rect x="300" y="380" width="200" height="56" rx="10" fill="#F1F3F7" stroke="#5B6472" stroke-width="1.2"/>
+        <text x="400" y="413" text-anchor="middle" font-size="14" font-weight="700" fill="#080D18">Analytics</text>
+
+        <rect x="580" y="380" width="200" height="56" rx="10" fill="#F1F3F7" stroke="#5B6472" stroke-width="1.2"/>
+        <text x="680" y="413" text-anchor="middle" font-size="14" font-weight="700" fill="#080D18">Search index</text>
+
+        <rect x="800" y="380" width="200" height="56" rx="10" fill="#F1F3F7" stroke="#5B6472" stroke-width="1.2"/>
+        <text x="900" y="413" text-anchor="middle" font-size="14" font-weight="700" fill="#080D18">Reporting</text>
+      </g>
+
+      <rect x="215" y="98" width="650" height="240" rx="16" fill="#2F55E8" fill-opacity=".08" stroke="#2F55E8" stroke-width="2"/>
+      <text x="245" y="132" font-size="14" font-weight="800" letter-spacing=".08em" fill="#2F55E8">STRONGLY CONSISTENT &middot; must be correct immediately</text>
+
+      <g font-family="Inter, sans-serif">
+        <rect x="250" y="160" width="180" height="130" rx="10" fill="#FFFFFF" stroke="#2F55E8" stroke-width="1.6"/>
+        <text x="340" y="220" text-anchor="middle" font-size="15" font-weight="700" fill="#080D18">Transaction</text>
+        <text x="340" y="240" text-anchor="middle" font-size="15" font-weight="700" fill="#080D18">state</text>
+
+        <rect x="450" y="160" width="180" height="130" rx="10" fill="#FFFFFF" stroke="#2F55E8" stroke-width="1.6"/>
+        <text x="540" y="220" text-anchor="middle" font-size="15" font-weight="700" fill="#080D18">Account</text>
+        <text x="540" y="240" text-anchor="middle" font-size="15" font-weight="700" fill="#080D18">balance</text>
+
+        <rect x="650" y="160" width="180" height="130" rx="10" fill="#FFFFFF" stroke="#2F55E8" stroke-width="1.6"/>
+        <text x="740" y="220" text-anchor="middle" font-size="15" font-weight="700" fill="#080D18">Idempotency</text>
+        <text x="740" y="240" text-anchor="middle" font-size="15" font-weight="700" fill="#080D18">keys</text>
+      </g>
+
+    </svg>
+
+    <figcaption>The architectural question isn't <b>"should we use eventual consistency?"</b> &mdash; it's where the strong boundary sits. Keep it around the smallest set of facts that decide whether money is allowed to move; let everything that only reacts to that decision catch up on its own schedule.</figcaption>
+  </figure>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">linkedin.com/company/the-fintech-engineer</div>
+  </div>
+
+</div>

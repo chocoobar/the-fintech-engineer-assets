@@ -1,0 +1,28 @@
+🍽️ Two people order almost the same $42 dinner tonight. One earns 4x points. The other earns 1x. Same network, same card product, same amount charged. The only thing that's different is a 4-digit number neither of them will ever see on a receipt.
+
+🔢 That number is the Merchant Category Code — MCC. It's assigned to the merchant, not the transaction, at signup with an acquirer. ~700 codes, standardized across Visa, Mastercard and ISO 18245, riding quietly inside every authorization message (ISO 8583, field 18). Once set, three systems read that same code off the same swipe — and each decides something different.
+
+1️⃣ Rewards. The rewards engine maps MCC to a bonus bucket. 5812–5814 → dining, 4x. 5411 → grocery, 3x. Everything else defaults to 1x. That's why a grocery store with a deli counter sometimes doesn't earn bonus points — its overall MCC (5411 vs. 5499) decided that, not what's in the cart. 🛒
+
+2️⃣ Fraud. The risk model treats MCC as a strong feature, not a footnote. A cardholder who's never bought jewelry suddenly swiping $8,000 at MCC 5944 in a country they've never visited — that combination, more than the amount alone, is what trips step-up auth or a decline. 🚨
+
+3️⃣ Interchange. MCC sets the swipe fee itself. Networks publish different rates by category because a $6 coffee and a $600 flight carry different risk and margin profiles. Supermarkets and fuel get lower rates than general retail — baked into the MCC table, not negotiated per deal. 💳
+
+🧠 Here's the time-saver: nobody memorizes ~700 codes. The numbering is banded by leading digit, so you can place almost any MCC into its rough bucket at a glance:
+
+0–2xxx → Agriculture & contracted services
+3xxx → Travel — airlines, car rental, lodging
+4xxx → Transportation & utilities
+5xxx → Retail & restaurants — the biggest band, and the one rewards engines care most about
+6xxx → Financial & cash-like transactions
+7xxx → Business, personal & auto services
+8xxx → Professional services — medical, legal, education
+9xxx → Government services, taxes, fines
+
+🎯 That one heuristic — leading digit — gets you 80% of the way to guessing a category correctly. The other 20% is a short exception list, pinned on purpose: 5812–5814 (dining, rewards), 5944 (jewelry, fraud), 7995 (gambling, risk holds), 6051 (quasi-cash, AML). They don't follow the band logic; someone decided they carry outsized weight.
+
+💡 The actual hack for building on top of MCC — a rewards table, a fraud feature, a fee estimator — isn't memorizing codes. Bucket by leading digit first, then override with a short, explicit list of the codes your business actually cares about. Hardcoding all 700 is how that logic quietly rots the first time the network revises the list.
+
+👇 What's the one MCC exception your rewards or fraud logic always has to special-case? I'd like to hear which code keeps showing up.
+
+#fintech #payments #cardnetworks #fraud #interchange #softwareengineering

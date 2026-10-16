@@ -1,0 +1,95 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{ --ink:#080D18; --signal:#2F55E8; --paper:#F1F3F7; --slate:#5B6472; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+  .card{ width:1080px; margin:0 auto; background:var(--paper); color:var(--ink); padding:64px 66px 48px; display:flex; flex-direction:column; gap:30px; }
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .head-copy{ display:flex; flex-direction:column; gap:10px; max-width:85%; }
+  .card-eyebrow{ font-size:15px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .card-h1{ font-size:31px; font-weight:800; line-height:1.22; letter-spacing:-.01em; color:var(--ink); text-wrap:balance; }
+  .mark{ width:36px; height:36px; flex-shrink:0; margin-top:2px; }
+  .diagram-wrap{ width:100%; }
+  .diagram-wrap svg{ display:block; width:100%; height:auto; }
+  figcaption{ margin-top:14px; font-size:17px; line-height:1.55; color:var(--slate); }
+  figcaption b{ color:var(--ink); }
+  figure{ margin:0; }
+  .footer-row{ display:flex; align-items:center; justify-content:space-between; padding-top:20px; border-top:1px solid rgba(8,13,24,.1); }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="card">
+
+  <div class="head-row">
+    <div class="head-copy">
+      <div class="card-eyebrow">Kafka doesn&rsquo;t magically make money consistent</div>
+      <div class="card-h1">Messaging gives you async delivery &mdash; not atomicity with your database</div>
+    </div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <figure class="diagram-wrap">
+    <svg viewBox="0 0 1080 560" role="img" aria-label="Payment Service publishes to Kafka, which fans out to Ledger, Notification and Analytics consumers. Below, two failure panels: one where the database commits but the Kafka publish never happens, and one where a Kafka event is published but the database transaction is rolled back.">
+
+      <defs>
+        <marker id="arrK" markerWidth="8" markerHeight="8" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 Z" fill="#080D18"/>
+        </marker>
+      </defs>
+
+      <rect x="450" y="20" width="180" height="50" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.4"/>
+      <text x="540" y="50" text-anchor="middle" font-size="13.5" font-weight="700" fill="#080D18">Payment Service</text>
+
+      <line x1="540" y1="70" x2="540" y2="114" stroke="#080D18" stroke-width="1.6" marker-end="url(#arrK)"/>
+
+      <rect x="465" y="116" width="150" height="46" rx="9" fill="#2F55E8" fill-opacity=".1" stroke="#2F55E8" stroke-width="1.4"/>
+      <text x="540" y="145" text-anchor="middle" font-size="14" font-weight="800" fill="#2F55E8">Kafka</text>
+
+      <g stroke="#080D18" stroke-width="1.4" marker-end="url(#arrK)" fill="none">
+        <path d="M500,162 L280,206"/>
+        <path d="M540,162 L540,206"/>
+        <path d="M580,162 L800,206"/>
+      </g>
+
+      <g font-family="Inter, sans-serif">
+        <rect x="170" y="208" width="220" height="56" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.2"/>
+        <text x="280" y="242" text-anchor="middle" font-size="13" font-weight="700" fill="#080D18">Ledger Consumer</text>
+
+        <rect x="430" y="208" width="220" height="56" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.2"/>
+        <text x="540" y="242" text-anchor="middle" font-size="13" font-weight="700" fill="#080D18">Notification Consumer</text>
+
+        <rect x="690" y="208" width="220" height="56" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.2"/>
+        <text x="800" y="242" text-anchor="middle" font-size="13" font-weight="700" fill="#080D18">Analytics Consumer</text>
+      </g>
+
+      <text x="540" y="304" text-anchor="middle" font-size="12.5" font-weight="700" fill="#5B6472">looks fully decoupled &mdash; until the commit and the publish disagree</text>
+
+      <rect x="60" y="330" width="470" height="210" rx="12" fill="#FFFFFF" stroke="#2F55E8" stroke-width="1.6"/>
+      <text x="90" y="364" font-size="13" font-weight="800" fill="#2F55E8">FAILURE MODE 1</text>
+      <text x="90" y="398" font-size="14" font-weight="700" fill="#080D18">Database = SUCCESS</text>
+      <text x="90" y="424" font-size="14" font-weight="700" fill="#080D18">Kafka = no event published</text>
+      <line x1="90" y1="444" x2="500" y2="444" stroke="#080D18" stroke-opacity=".15" stroke-width="1"/>
+      <text x="90" y="474" font-size="12.5" font-weight="600" fill="#5B6472">Downstream systems never learn</text>
+      <text x="90" y="496" font-size="12.5" font-weight="600" fill="#5B6472">the transaction happened at all.</text>
+
+      <rect x="550" y="330" width="470" height="210" rx="12" fill="#FFFFFF" stroke="#2F55E8" stroke-width="1.6"/>
+      <text x="580" y="364" font-size="13" font-weight="800" fill="#2F55E8">FAILURE MODE 2</text>
+      <text x="580" y="398" font-size="14" font-weight="700" fill="#080D18">Kafka = event published</text>
+      <text x="580" y="424" font-size="14" font-weight="700" fill="#080D18">Database = transaction rolled back</text>
+      <line x1="580" y1="444" x2="990" y2="444" stroke="#080D18" stroke-opacity=".15" stroke-width="1"/>
+      <text x="580" y="474" font-size="12.5" font-weight="600" fill="#5B6472">Consumers believe something happened</text>
+      <text x="580" y="496" font-size="12.5" font-weight="600" fill="#5B6472">that the source transaction doesn't contain.</text>
+
+    </svg>
+
+    <figcaption>Both failure modes are ordinary, independent infrastructure hiccups &mdash; not exotic edge cases. Without a mechanism tying the commit and the publish together, either one leaves your systems disagreeing about whether money moved.</figcaption>
+  </figure>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">thefintechengineer.substack.com</div>
+  </div>
+
+</div>

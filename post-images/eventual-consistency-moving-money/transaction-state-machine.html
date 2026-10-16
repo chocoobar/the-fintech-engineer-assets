@@ -1,0 +1,95 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{ --ink:#080D18; --signal:#2F55E8; --paper:#F1F3F7; --slate:#5B6472; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+  .card{ width:1080px; margin:0 auto; background:var(--paper); color:var(--ink); padding:64px 66px 48px; display:flex; flex-direction:column; gap:30px; }
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .head-copy{ display:flex; flex-direction:column; gap:10px; max-width:85%; }
+  .card-eyebrow{ font-size:15px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .card-h1{ font-size:31px; font-weight:800; line-height:1.22; letter-spacing:-.01em; color:var(--ink); text-wrap:balance; }
+  .mark{ width:36px; height:36px; flex-shrink:0; margin-top:2px; }
+  .diagram-wrap{ width:100%; }
+  .diagram-wrap svg{ display:block; width:100%; height:auto; }
+  figcaption{ margin-top:14px; font-size:17px; line-height:1.55; color:var(--slate); }
+  figcaption b{ color:var(--ink); }
+  figure{ margin:0; }
+  .footer-row{ display:flex; align-items:center; justify-content:space-between; padding-top:20px; border-top:1px solid rgba(8,13,24,.1); }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="card">
+
+  <div class="head-row">
+    <div class="head-copy">
+      <div class="card-eyebrow">The transaction state machine matters</div>
+      <div class="card-h1">SUCCESS / FAILED isn't a real transaction model</div>
+    </div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <figure class="diagram-wrap">
+    <svg viewBox="0 0 1080 560" role="img" aria-label="INITIATED moves to PROCESSING, which branches to SUCCESS, FAILED, or UNKNOWN. UNKNOWN is resolved through gateway inquiry, callback, retry with idempotency, or reconciliation. SUCCESS continues to SETTLED then RECONCILED.">
+
+      <defs>
+        <marker id="arrT" markerWidth="8" markerHeight="8" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 Z" fill="#080D18"/>
+        </marker>
+      </defs>
+
+      <rect x="440" y="20" width="200" height="50" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.4"/>
+      <text x="540" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#080D18">INITIATED</text>
+
+      <line x1="540" y1="70" x2="540" y2="110" stroke="#080D18" stroke-width="1.6" marker-end="url(#arrT)"/>
+
+      <rect x="440" y="112" width="200" height="50" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.4"/>
+      <text x="540" y="142" text-anchor="middle" font-size="14" font-weight="700" fill="#080D18">PROCESSING</text>
+
+      <g stroke="#080D18" stroke-width="1.4" marker-end="url(#arrT)" fill="none">
+        <path d="M480,162 L200,222"/>
+        <path d="M540,162 L540,222"/>
+        <path d="M600,162 L880,222"/>
+      </g>
+
+      <rect x="90" y="224" width="220" height="50" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.4"/>
+      <text x="200" y="254" text-anchor="middle" font-size="14" font-weight="700" fill="#080D18">SUCCESS</text>
+
+      <rect x="430" y="224" width="220" height="50" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.4"/>
+      <text x="540" y="254" text-anchor="middle" font-size="14" font-weight="700" fill="#080D18">FAILED</text>
+
+      <rect x="770" y="224" width="220" height="50" rx="9" fill="#FFFFFF" stroke="#2F55E8" stroke-width="1.8"/>
+      <text x="880" y="254" text-anchor="middle" font-size="14" font-weight="800" fill="#2F55E8">UNKNOWN</text>
+
+      <rect x="700" y="300" width="360" height="150" rx="10" fill="#2F55E8" fill-opacity=".07" stroke="#2F55E8" stroke-width="1.4"/>
+      <text x="880" y="326" text-anchor="middle" font-size="12" font-weight="800" letter-spacing=".05em" fill="#2F55E8">RESOLVED THROUGH</text>
+      <g font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#080D18">
+        <text x="730" y="356">&rarr; gateway status inquiry</text>
+        <text x="730" y="382">&rarr; asynchronous callback</text>
+        <text x="730" y="408">&rarr; retry with idempotency</text>
+        <text x="730" y="434">&rarr; reconciliation</text>
+      </g>
+
+      <line x1="200" y1="274" x2="200" y2="314" stroke="#080D18" stroke-width="1.6" marker-end="url(#arrT)"/>
+      <rect x="90" y="316" width="220" height="46" rx="9" fill="#F1F3F7" stroke="#080D18" stroke-width="1.2"/>
+      <text x="200" y="344" text-anchor="middle" font-size="13" font-weight="700" fill="#080D18">SETTLED</text>
+
+      <line x1="200" y1="362" x2="200" y2="402" stroke="#080D18" stroke-width="1.6" marker-end="url(#arrT)"/>
+      <rect x="90" y="404" width="220" height="46" rx="9" fill="#F1F3F7" stroke="#080D18" stroke-width="1.2"/>
+      <text x="200" y="432" text-anchor="middle" font-size="13" font-weight="700" fill="#080D18">RECONCILED</text>
+
+      <text x="200" y="484" text-anchor="middle" font-size="12" font-weight="600" fill="#5B6472">a timeout is a network event &mdash;</text>
+      <text x="200" y="502" text-anchor="middle" font-size="12" font-weight="600" fill="#5B6472">not automatically a business outcome</text>
+
+    </svg>
+
+    <figcaption>Calling a timed-out payment <b>FAILED</b> because your request timed out can be more dangerous than leaving it <b>UNKNOWN</b> &mdash; the gateway may have processed it anyway, and a hasty retry on top of a wrong FAILED label is exactly how a double-charge slips through.</figcaption>
+  </figure>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">thefintechengineer.substack.com</div>
+  </div>
+
+</div>

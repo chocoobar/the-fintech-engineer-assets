@@ -1,0 +1,11 @@
+🧵 New field note: "Eventual consistency is fine — until you're moving money."
+
+⚖️ Two payment service instances read the same $10,000 balance. Both approve a $7,000 withdrawal. Both commit. Nothing crashed, nothing threw an error — $14,000 walked out against $10,000 available.
+
+💡 That's not a lagging replica catching up later. It's an invariant that should never have been eventual in the first place.
+
+📖 The full piece digs into where to draw the strong-consistency boundary, why "read → decide → write" is the actual bug, the outbox pattern, and why Kafka alone doesn't buy you atomicity.
+
+👉 Read it on Substack: thefintechengineer.substack.com
+
+#fintech #distributedsystems #softwareengineering #systemdesign #payments

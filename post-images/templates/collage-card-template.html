@@ -1,0 +1,166 @@
+<!--
+  COLLAGE CARD TEMPLATE — denser, "editorial dossier" variant of card-template.html.
+  Same brand tokens, same flat full-bleed export rules, same footer — just a
+  louder treatment for a scroll-stopping hook image: halftone dot texture,
+  a torn-paper illustration panel with leader-line callouts, a torn-paper
+  tag, and a marker-highlight sweep through the headline (Signal blue
+  stands in for what a generic "neon highlighter" reference would use —
+  never introduce an off-brand color here, see brand-guide.pdf).
+
+  Use this instead of card-template.html when the post needs a bigger,
+  denser hook image (e.g. the opening LinkedIn image, or a portfolio/
+  archive piece) rather than a single clean diagram. It's heavier — don't
+  use it for every post.
+
+  Fully worked example: ../mcc-merchant-category-code/collage-card.html
+  (a payment-terminal illustration with three annotated callouts). Copy
+  that file's illustration/callout code as a starting point rather than
+  hand-rolling new SVG groups from scratch.
+
+  Gotchas learned building the worked example (avoid repeating these):
+  - Put the caption OUTSIDE .panel-wrap, as its own sibling in .card.
+    The torn-shadow layer is absolutely positioned with a negative
+    `bottom` offset relative to .panel-wrap's full box — if the caption
+    lives inside .panel-wrap, that offset stretches down to cover the
+    caption text.
+  - Any illustration element meant to be "the one thing to look at"
+    (a circled code, a key number) should render in --signal, not --ink.
+    Ink-on-white reads as ordinary body text at a glance; signal-on-white
+    matches the callout accent color and actually pops.
+  - Measure callout-box text against the box width before shipping.
+    SVG <text> does not wrap or clip by default — a string longer than
+    the rect it sits in will silently overflow onto the dark background
+    and disappear (dark text on the dark panel bg). Widen the rect or
+    shorten the copy; don't just trust it "probably fits."
+  - Any shape a `curl`/`fold` path (e.g. a receipt) needs to stay wide
+    enough at every y-position your text passes through — prefer a
+    simple rect with a zigzag torn edge over a hand-drawn curl unless
+    you're going to check every text baseline against the path's bounds.
+
+  Export: python3 ../export_png.py collage-card-template.html out.png --window=1080,2600
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+
+  .card{
+    position:relative;
+    width:1080px;
+    margin:0 auto;
+    background:var(--paper);
+    color:var(--ink);
+    padding:60px 66px 48px;
+    display:flex;
+    flex-direction:column;
+    gap:34px;
+    overflow:hidden;
+  }
+
+  /* full-bleed film grain, purely decorative, sits above everything else */
+  .grain{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:5; opacity:.05; mix-blend-mode:multiply; }
+
+  .head-row{ position:relative; z-index:2; display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .head-copy{ display:flex; flex-direction:column; gap:8px; }
+  .card-eyebrow{ font-size:14px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--signal); }
+  .card-tag{ font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--slate); }
+  .mark{ width:36px; height:36px; flex-shrink:0; margin-top:2px; }
+
+  .headline{ font-size:76px; font-weight:900; line-height:.98; letter-spacing:-.02em; text-transform:uppercase; color:var(--ink); margin:0; }
+  /* marker-highlight sweep: wrap the 2-3 words you want punched, not the whole headline */
+  .hl-mark{ display:inline-block; background:var(--signal); color:#FFFFFF; padding:2px 14px 8px; margin-left:2px; transform:rotate(-1.2deg); border-radius:2px 12px 3px 14px; }
+
+  .dek{ max-width:760px; font-size:20px; font-weight:500; line-height:1.5; color:var(--slate); }
+  .dek b{ color:var(--ink); font-weight:700; }
+
+  /* torn-paper tag: a small pinned annotation, e.g. a spec reference or stat */
+  .tag{
+    align-self:flex-start;
+    background:var(--paper); color:var(--ink);
+    padding:9px 18px 12px;
+    font-size:14px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+    transform:rotate(-2deg);
+    clip-path:polygon(0% 10%,12% 0%,26% 7%,40% 0%,54% 6%,68% 0%,82% 8%,100% 2%,96% 24%,100% 46%,94% 62%,100% 82%,97% 100%,80% 94%,62% 100%,46% 93%,30% 100%,14% 94%,0% 100%,4% 78%,0% 56%,5% 34%);
+  }
+
+  /* ---- torn-edge illustration panel ---- */
+  .panel-wrap{ position:relative; width:100%; }
+  .torn-shadow{
+    position:absolute; top:9px; left:9px; right:-9px; bottom:-9px;
+    background:var(--ink);
+    clip-path:polygon(0% 2%,3% 0%,9% 1.5%,15% 0%,22% 1%,30% 0%,38% 1.2%,46% 0%,55% 1%,63% 0%,71% 1.4%,79% 0%,87% 1%,94% 0%,100% 1.5%,100% 8%,99% 15%,100% 23%,99% 31%,100% 40%,99% 48%,100% 57%,99% 65%,100% 74%,99% 82%,100% 90%,99% 97%,100% 100%,92% 99%,85% 100%,77% 99%,69% 100%,61% 99%,53% 100%,45% 99%,37% 100%,29% 99%,21% 100%,13% 99%,6% 100%,0% 99%,1% 91%,0% 83%,1% 75%,0% 67%,1% 59%,0% 51%,1% 43%,0% 35%,1% 27%,0% 19%,1% 11%,0% 4%);
+  }
+  .torn-panel{
+    position:relative;
+    background:var(--ink);
+    clip-path:polygon(0% 2%,3% 0%,9% 1.5%,15% 0%,22% 1%,30% 0%,38% 1.2%,46% 0%,55% 1%,63% 0%,71% 1.4%,79% 0%,87% 1%,94% 0%,100% 1.5%,100% 8%,99% 15%,100% 23%,99% 31%,100% 40%,99% 48%,100% 57%,99% 65%,100% 74%,99% 82%,100% 90%,99% 97%,100% 100%,92% 99%,85% 100%,77% 99%,69% 100%,61% 99%,53% 100%,45% 99%,37% 100%,29% 99%,21% 100%,13% 99%,6% 100%,0% 99%,1% 91%,0% 83%,1% 75%,0% 67%,1% 59%,0% 51%,1% 43%,0% 35%,1% 27%,0% 19%,1% 11%,0% 4%);
+  }
+  .torn-panel svg{ display:block; width:100%; height:auto; }
+
+  .caption{ font-size:16px; line-height:1.55; color:var(--slate); margin:0; }
+  .caption b{ color:var(--ink); }
+
+  .footer-row{
+    position:relative; z-index:2;
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:20px; border-top:1px solid rgba(8,13,24,.1);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="card">
+
+  <svg class="grain" xmlns="http://www.w3.org/2000/svg">
+    <filter id="grainFilter"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter>
+    <rect width="100%" height="100%" filter="url(#grainFilter)"/>
+  </svg>
+
+  <div class="head-row">
+    <div class="head-copy">
+      <div class="card-eyebrow"><!-- EYEBROW: e.g. "Field notes · card networks" --></div>
+      <div class="card-tag"><!-- optional small tag line, e.g. a spec reference --></div>
+    </div>
+    <!-- TFE mark — ink-on-paper shown; swap fills for white-on-ink cards -->
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <!-- optional torn-paper tag, e.g. <div class="tag">ISO 8583 · field 18</div> -->
+
+  <h1 class="headline"><!-- HEADLINE, wrap the 2-3 words to punch in --><span class="hl-mark"><!-- punched words --></span></h1>
+
+  <p class="dek"><!-- one or two sentences: the concrete hook, a number, a scenario --></p>
+
+  <div class="panel-wrap">
+    <div class="torn-shadow"></div>
+    <div class="torn-panel">
+      <svg viewBox="0 0 960 600" role="img" aria-label="<!-- describe the mechanism this illustrates -->">
+        <!--
+          CONTENT SLOT: hand-author the illustration here — draw the
+          mechanism the post's argument hinges on (see the "Diagram
+          content rule" in ../README.md), not a generic topic illustration.
+          Reserve --signal for the one thing you want the eye to land on
+          (a circled code, the failure point); everything else stays
+          ink/paper/slate. Add short leader-line callouts (line + dot +
+          small paper-colored pill with an ink accent bar) pointing at
+          the specific parts of the illustration each callout explains —
+          see collage-card.html's three callout groups for the pattern.
+        -->
+      </svg>
+    </div>
+  </div>
+  <p class="caption"><!-- one sentence: what the picture shows and why it matters --></p>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">linkedin.com/company/the-fintech-engineer</div>
+  </div>
+
+</div>

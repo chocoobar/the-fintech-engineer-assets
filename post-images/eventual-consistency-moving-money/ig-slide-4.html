@@ -1,0 +1,103 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+
+  .slide{
+    width:1080px;
+    height:1080px;
+    margin:0 auto;
+    background:var(--ink);
+    color:var(--paper);
+    padding:56px 64px 48px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .mark{ width:34px; height:34px; flex-shrink:0; }
+  .card-eyebrow{ font-size:14px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .swipe{ font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--signal); }
+
+  .content{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:24px; }
+
+  .h1{ font-size:38px; font-weight:800; line-height:1.2; letter-spacing:-.01em; color:var(--paper); margin:0; text-wrap:balance; }
+
+  .diagram-wrap svg{ display:block; width:100%; height:auto; }
+
+  .punch{ font-size:25px; font-weight:700; line-height:1.35; color:var(--signal); margin:0; }
+
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:18px; border-top:1px solid rgba(241,243,247,.14);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--paper); }
+  .signature{ font-size:14px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="slide">
+
+  <div class="head-row">
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#F1F3F7"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#F1F3F7"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#F1F3F7"/></g></g></svg>
+    <div style="text-align:right; display:flex; flex-direction:column; gap:5px;">
+      <div class="card-eyebrow">Eventual consistency &middot; 4/5</div>
+      <div class="swipe">Swipe &rarr;</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <p class="h1">Kafka doesn&rsquo;t buy you atomicity with your database.</p>
+
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 1080 420" role="img" aria-label="A database transaction and a Kafka publish are two separate steps with a gap between them. If the database commits but the publish fails, downstream systems never learn about the transaction. If the publish succeeds but the database rolls back, consumers believe something happened that never did.">
+        <defs>
+          <marker id="a4" markerWidth="8" markerHeight="8" refX="6" refY="3.5" orient="auto">
+            <path d="M0,0 L7,3.5 L0,7 Z" fill="#F1F3F7"/>
+          </marker>
+        </defs>
+
+        <rect x="80" y="30" width="360" height="80" rx="10" fill="rgba(241,243,247,.07)" stroke="#F1F3F7" stroke-width="1.4"/>
+        <text x="260" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="#F1F3F7">DB transaction</text>
+        <text x="260" y="88" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5B6472">commits business state</text>
+
+        <rect x="640" y="30" width="360" height="80" rx="10" fill="rgba(241,243,247,.07)" stroke="#F1F3F7" stroke-width="1.4"/>
+        <text x="820" y="66" text-anchor="middle" font-size="16" font-weight="700" fill="#F1F3F7">Kafka publish</text>
+        <text x="820" y="88" text-anchor="middle" font-size="12.5" font-weight="600" fill="#5B6472">separate network call</text>
+
+        <line x1="440" y1="70" x2="620" y2="70" stroke="#2F55E8" stroke-width="2.4" stroke-dasharray="6 5"/>
+        <text x="540" y="52" text-anchor="middle" font-size="13" font-weight="800" fill="#2F55E8">GAP</text>
+
+        <rect x="90" y="150" width="440" height="120" rx="12" fill="rgba(47,85,232,.1)" stroke="#2F55E8" stroke-width="1.4"/>
+        <text x="120" y="180" font-size="12.5" font-weight="800" fill="#2F55E8">FAILURE MODE 1</text>
+        <text x="120" y="210" font-size="14.5" font-weight="700" fill="#F1F3F7">DB: SUCCESS &middot; Kafka: no event</text>
+        <text x="120" y="238" font-size="12.5" font-weight="600" fill="#5B6472">Downstream never learns it happened.</text>
+
+        <rect x="550" y="150" width="440" height="120" rx="12" fill="rgba(47,85,232,.1)" stroke="#2F55E8" stroke-width="1.4"/>
+        <text x="580" y="180" font-size="12.5" font-weight="800" fill="#2F55E8">FAILURE MODE 2</text>
+        <text x="580" y="210" font-size="14.5" font-weight="700" fill="#F1F3F7">Kafka: published &middot; DB: rolled back</text>
+        <text x="580" y="238" font-size="12.5" font-weight="600" fill="#5B6472">Consumers believe a fiction.</text>
+
+        <line x1="540" y1="270" x2="540" y2="310" stroke="#F1F3F7" stroke-width="1.6" marker-end="url(#a4)"/>
+        <rect x="330" y="312" width="420" height="60" rx="10" fill="rgba(255,255,255,.95)" stroke="#2F55E8" stroke-width="1.6"/>
+        <text x="540" y="348" text-anchor="middle" font-size="15" font-weight="800" fill="#080D18">Fix: transactional outbox</text>
+
+      </svg>
+    </div>
+
+    <p class="punch">Commit the event with the state, not after it.</p>
+  </div>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">thefintechengineer.substack.com</div>
+  </div>
+
+</div>

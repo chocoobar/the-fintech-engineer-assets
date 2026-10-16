@@ -1,0 +1,87 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{
+    font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
+  }
+
+  .card{
+    width:1080px;
+    margin:0 auto;
+    background:var(--paper);
+    color:var(--ink);
+    padding:72px 72px 52px;
+    display:flex;
+    flex-direction:column;
+    gap:36px;
+  }
+
+  .head-row{ display:flex; align-items:center; justify-content:space-between; }
+  .card-eyebrow{ font-size:15px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .mark{ width:34px; height:34px; }
+
+  .quote{
+    font-size:50px; font-weight:800; line-height:1.16; letter-spacing:-.015em;
+    text-wrap:balance; color:var(--ink); margin:0;
+  }
+  .quote .signal{ color:var(--signal); }
+
+  .stat-row{ display:flex; gap:22px; }
+  .stat-box{
+    flex:1; background:#FFFFFF; border:1px solid rgba(8,13,24,.14); border-radius:14px;
+    padding:26px 28px; display:flex; flex-direction:column; gap:6px;
+  }
+  .stat-box.signal{ border-color:var(--signal); background:rgba(47,85,232,.06); }
+  .stat-label{ font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--slate); }
+  .stat-value{ font-size:40px; font-weight:800; color:var(--ink); }
+  .stat-value.signal{ color:var(--signal); }
+  .stat-sub{ font-size:14px; font-weight:600; color:var(--slate); }
+
+  .lede{ font-size:19px; line-height:1.6; color:#1E2530; margin:0; max-width:80ch; }
+  .lede b{ color:var(--ink); }
+
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:22px; border-top:1px solid rgba(8,13,24,.1);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="card">
+
+  <div class="head-row">
+    <div class="card-eyebrow">The Fintech Engineer &middot; Field Notes</div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <p class="quote">Eventual consistency is fine. <span class="signal">Until you're moving money.</span></p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-label">Available balance</div>
+      <div class="stat-value">$10,000</div>
+      <div class="stat-sub">what the account actually holds</div>
+    </div>
+    <div class="stat-box signal">
+      <div class="stat-label">Approved anyway</div>
+      <div class="stat-value signal">$14,000</div>
+      <div class="stat-sub">two correct reads, one broken invariant</div>
+    </div>
+  </div>
+
+  <p class="lede">A product catalog can lag. A dashboard can be stale. But when two systems each read the truth correctly and still approve money that isn't there, <b>the question isn't how fast they converge &mdash; it's which invariant should never have been eventual in the first place.</b></p>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">thefintechengineer.substack.com</div>
+  </div>
+
+</div>

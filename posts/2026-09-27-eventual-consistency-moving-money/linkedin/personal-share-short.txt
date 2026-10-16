@@ -1,0 +1,8 @@
+Eventual consistency is fine — until you're moving money.
+
+Wrote up why that sentence gets a lot more dangerous the moment "eventually" touches a balance.
+
+Full piece here 👇
+thefintechengineer.substack.com
+
+#fintech #distributedsystems #softwareengineering

@@ -1,0 +1,104 @@
+<!-- IG CAROUSEL 4/5 — the hand-picked exceptions that don't follow the band logic. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap">
+<style>
+  :root{ --ink:#080D18; --signal:#2F55E8; --paper:#F1F3F7; --slate:#5B6472; }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+
+  .slide{
+    position:relative;
+    width:1080px; height:1080px; margin:0 auto;
+    background:var(--ink); color:var(--paper);
+    padding:56px 64px 48px;
+    display:flex; flex-direction:column;
+    overflow:hidden;
+  }
+  .halftone{ position:absolute; inset:0; background-image:radial-gradient(circle, rgba(241,243,247,.16) 1px, transparent 1.4px); background-size:9px 9px; opacity:.4; pointer-events:none; }
+  .grain{ position:absolute; inset:0; width:100%; height:100%; opacity:.05; mix-blend-mode:overlay; pointer-events:none; }
+
+  .head-row{ position:relative; z-index:2; display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .mark{ width:34px; height:34px; flex-shrink:0; }
+  .card-eyebrow{ font-size:14px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .swipe{ font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--signal); }
+
+  .content{ position:relative; z-index:2; flex:1; display:flex; flex-direction:column; justify-content:center; }
+
+  .tag{
+    align-self:flex-start;
+    background:var(--paper); color:var(--ink);
+    padding:9px 18px 12px; margin-bottom:22px;
+    font-size:14px; font-weight:800; letter-spacing:.06em; text-transform:uppercase;
+    transform:rotate(-2deg);
+    clip-path:polygon(0% 10%,12% 0%,26% 7%,40% 0%,54% 6%,68% 0%,82% 8%,100% 2%,96% 24%,100% 46%,94% 62%,100% 82%,97% 100%,80% 94%,62% 100%,46% 93%,30% 100%,14% 94%,0% 100%,4% 78%,0% 56%,5% 34%);
+  }
+
+  .headline{ font-size:50px; font-weight:900; line-height:1.05; letter-spacing:-.015em; text-transform:uppercase; color:var(--paper); margin:0; }
+
+  .dek{ margin:20px 0 34px; max-width:880px; font-size:21px; font-weight:500; line-height:1.5; color:var(--slate); }
+  .dek b{ color:var(--paper); font-weight:700; }
+
+  .ex-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .ex-card{
+    background:rgba(241,243,247,.06); border:1.5px solid rgba(241,243,247,.18);
+    border-radius:14px; padding:24px 26px; display:flex; flex-direction:column; gap:8px;
+  }
+  .ex-card .code{ font-size:36px; font-weight:900; color:var(--signal); letter-spacing:-.01em; }
+  .ex-card .label{ font-size:18px; font-weight:700; color:var(--paper); }
+  .ex-card .why{ font-size:14.5px; font-weight:500; color:var(--slate); line-height:1.4; }
+
+  .footer-row{
+    position:relative; z-index:2;
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:18px; border-top:1px solid rgba(241,243,247,.14);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--paper); }
+  .signature{ font-size:14px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="slide">
+  <div class="halftone"></div>
+  <svg class="grain"><filter id="g4"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/></filter><rect width="100%" height="100%" filter="url(#g4)"/></svg>
+
+  <div class="head-row">
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#F1F3F7"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#F1F3F7"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#F1F3F7"/></g></g></svg>
+    <div style="text-align:right; display:flex; flex-direction:column; gap:5px;">
+      <div class="card-eyebrow">Card networks &middot; 4/5</div>
+      <div class="swipe">Swipe &rarr;</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="tag">The other 20%</div>
+    <h1 class="headline">Exceptions carved out on purpose</h1>
+    <p class="dek">These don't follow the band logic &mdash; someone pinned them individually because they carry outsized weight.</p>
+
+    <div class="ex-grid">
+      <div class="ex-card">
+        <div class="code">5812&ndash;14</div>
+        <div class="label">Dining</div>
+        <div class="why">Pinned for rewards &mdash; locked to the 4x bucket, whatever's on the ticket.</div>
+      </div>
+      <div class="ex-card">
+        <div class="code">5944</div>
+        <div class="label">Jewelry</div>
+        <div class="why">Pinned for fraud &mdash; unfamiliar + high amount trips step-up auth.</div>
+      </div>
+      <div class="ex-card">
+        <div class="code">7995</div>
+        <div class="label">Gambling</div>
+        <div class="why">Pinned for risk &mdash; routinely triggers an automatic hold.</div>
+      </div>
+      <div class="ex-card">
+        <div class="code">6051</div>
+        <div class="label">Quasi-cash</div>
+        <div class="why">Pinned for AML &mdash; wires, crypto on-ramps flagged for review.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">thefintechengineer.substack.com</div>
+  </div>
+</div>

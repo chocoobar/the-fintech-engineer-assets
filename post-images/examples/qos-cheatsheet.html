@@ -1,0 +1,211 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+  code, pre, .mono{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+
+  .card{
+    width:1080px;
+    margin:0 auto;
+    background:var(--paper);
+    color:var(--ink);
+    padding:64px 66px 48px;
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+  }
+
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .head-copy{ display:flex; flex-direction:column; gap:10px; max-width:80%; }
+  .card-eyebrow{ font-size:15px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .card-h1{ font-size:31px; font-weight:800; line-height:1.22; letter-spacing:-.01em; color:var(--ink); text-wrap:balance; }
+  .mark{ width:36px; height:36px; flex-shrink:0; margin-top:2px; }
+
+  .section-label{ font-size:13px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--slate); margin-bottom:12px; }
+
+  .codepanel{
+    background:var(--ink);
+    border-radius:12px;
+    padding:22px 26px 24px;
+  }
+  .codepanel .titlebar{ display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .dot{ width:10px; height:10px; border-radius:50%; }
+  .codepanel pre{
+    margin:0; font-size:15.5px; line-height:1.68; color:#E7EAF2; white-space:pre;
+  }
+  .k{ color:#7C9CFF; }         /* keys */
+  .s{ color:#B7E0C8; }         /* string values */
+  .c{ color:#7C8598; font-style:italic; }  /* comments */
+  .punct{ color:#5B6472; }
+
+  .qos-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:22px; }
+  .qos-col{ display:flex; flex-direction:column; gap:12px; }
+  .qos-col .codepanel{ padding:18px 18px 20px; }
+  .qos-col .codepanel pre{ font-size:13.5px; line-height:1.66; }
+  .qos-caption{ font-size:12.5px; line-height:1.5; color:var(--slate); }
+  .qos-caption b{ color:var(--ink); }
+
+  table{ width:100%; border-collapse:collapse; background:#FFFFFF; border-radius:12px; overflow:hidden; }
+  thead th{
+    text-align:left; background:var(--ink); color:#FFFFFF;
+    font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    padding:14px 18px;
+  }
+  tbody td{
+    text-align:left; padding:16px 18px; font-size:14.5px; color:var(--ink);
+    border-bottom:1px solid rgba(8,13,24,.08); vertical-align:top; line-height:1.45;
+  }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:nth-child(even){ background:rgba(8,13,24,.025); }
+  .tag{
+    display:inline-block; font-size:12px; font-weight:700; padding:3px 9px; border-radius:20px;
+  }
+  .tag-guaranteed{ background:rgba(47,85,232,.12); color:var(--signal); }
+  .tag-burstable{ background:rgba(8,13,24,.08); color:var(--ink); }
+  .tag-besteffort{ background:rgba(8,13,24,.06); color:var(--slate); }
+  .workload{ font-weight:700; color:var(--ink); }
+  .muted{ color:var(--slate); }
+
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:20px; border-top:1px solid rgba(8,13,24,.1);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="card">
+
+  <div class="head-row">
+    <div class="head-copy">
+      <div class="card-eyebrow">Cheat sheet &middot; requests &amp; limits</div>
+      <div class="card-h1">The syntax, and what to set it to by workload</div>
+    </div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <div>
+    <div class="section-label">Pod spec &middot; resources block, by QoS class</div>
+    <div class="qos-grid">
+
+      <div class="qos-col">
+        <span class="tag tag-guaranteed" style="width:fit-content">Guaranteed</span>
+        <div class="codepanel">
+          <div class="titlebar">
+            <div class="dot" style="background:#2F55E8"></div>
+            <div class="dot" style="background:#5B6472"></div>
+            <div class="dot" style="background:#5B6472"></div>
+          </div>
+          <pre><span class="k">resources</span><span class="punct">:</span>
+  <span class="k">requests</span><span class="punct">:</span>
+    <span class="k">cpu</span><span class="punct">:</span> <span class="s">"1"</span>
+    <span class="k">memory</span><span class="punct">:</span> <span class="s">"512Mi"</span>
+  <span class="k">limits</span><span class="punct">:</span>
+    <span class="k">cpu</span><span class="punct">:</span> <span class="s">"1"</span>
+    <span class="k">memory</span><span class="punct">:</span> <span class="s">"512Mi"</span></pre>
+        </div>
+        <div class="qos-caption"><b>Both</b> resources, request == limit. Last evicted — but every burst is capped at steady state.</div>
+      </div>
+
+      <div class="qos-col">
+        <span class="tag tag-burstable" style="width:fit-content">Burstable</span>
+        <div class="codepanel">
+          <div class="titlebar">
+            <div class="dot" style="background:#2F55E8"></div>
+            <div class="dot" style="background:#5B6472"></div>
+            <div class="dot" style="background:#5B6472"></div>
+          </div>
+          <pre><span class="k">resources</span><span class="punct">:</span>
+  <span class="k">requests</span><span class="punct">:</span>
+    <span class="k">cpu</span><span class="punct">:</span> <span class="s">"250m"</span>
+    <span class="k">memory</span><span class="punct">:</span> <span class="s">"256Mi"</span>
+  <span class="k">limits</span><span class="punct">:</span>
+    <span class="k">memory</span><span class="punct">:</span> <span class="s">"512Mi"</span>
+    <span class="c"># cpu limit removed</span>
+    <span class="c"># — no CFS quota,</span>
+    <span class="c"># no self-throttling</span></pre>
+        </div>
+        <div class="qos-caption"><b>Memory capped, CPU uncapped.</b> Protected floor via cpu.shares, but free to burst into idle node CPU.</div>
+      </div>
+
+      <div class="qos-col">
+        <span class="tag tag-besteffort" style="width:fit-content">BestEffort</span>
+        <div class="codepanel">
+          <div class="titlebar">
+            <div class="dot" style="background:#2F55E8"></div>
+            <div class="dot" style="background:#5B6472"></div>
+            <div class="dot" style="background:#5B6472"></div>
+          </div>
+          <pre><span class="k">resources</span><span class="punct">:</span> <span class="punct">{}</span>
+
+
+<span class="c"># nothing set —</span>
+<span class="c"># nothing to</span>
+<span class="c"># bin-pack or</span>
+<span class="c"># protect</span></pre>
+        </div>
+        <div class="qos-caption"><b>Nothing set, nothing reserved.</b> Free to schedule anywhere — first evicted under any pressure.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div>
+    <div class="section-label">Best practice, by workload</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Workload</th>
+          <th>Memory: request = limit?</th>
+          <th>CPU limit?</th>
+          <th>Because</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="workload">Latency-sensitive API<br><span class="tag tag-guaranteed">Guaranteed</span></td>
+          <td>Yes — size from p99 + headroom</td>
+          <td>Omit, or set well above p99</td>
+          <td class="muted">A capped limit throttles the first burst above steady state</td>
+        </tr>
+        <tr>
+          <td class="workload">Database / cache / stateful<br><span class="tag tag-guaranteed">Guaranteed</span></td>
+          <td>Yes — mid-request OOM = corrupt state</td>
+          <td>Omit — bursts are normal, not a bug</td>
+          <td class="muted">Eviction priority matters more than bin-packing efficiency</td>
+        </tr>
+        <tr>
+          <td class="workload">General app / spiky CPU<br><span class="tag tag-burstable">Burstable</span></td>
+          <td>Set a limit — cap the leak risk</td>
+          <td>Omit — let it burst into free node CPU</td>
+          <td class="muted">cpu.shares still protects it under contention; a ceiling only costs idle cycles</td>
+        </tr>
+        <tr>
+          <td class="workload">Batch / cron / reconciliation<br><span class="tag tag-burstable">Burstable</span></td>
+          <td>Set a limit above expected peak</td>
+          <td>OK to cap — no one's waiting on it</td>
+          <td class="muted">Throttling a batch job is fine; an unbounded one isn't</td>
+        </tr>
+        <tr>
+          <td class="workload">Dev / non-critical<br><span class="tag tag-besteffort">BestEffort</span></td>
+          <td>Optional</td>
+          <td>Optional</td>
+          <td class="muted">First to be evicted is the point — nothing depends on it</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">linkedin.com/company/the-fintech-engineer</div>
+  </div>
+
+</div>

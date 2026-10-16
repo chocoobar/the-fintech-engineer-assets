@@ -1,0 +1,88 @@
+<!--
+  CARD TEMPLATE — single-visual LinkedIn image (a diagram, a trace, a quote card).
+  Copy this file, fill in the marked slots, then export with export_png.py.
+  See ../README.md for the full workflow and design rules.
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{
+    font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
+  }
+
+  /* Flat, full-bleed export: no shadow, no radius, no surrounding margin —
+     this IS the uploadable asset, edge to edge. Do not add a shadow/radius/
+     outer padding back in — see README "Why the card is flat, not floating". */
+  .card{
+    width:1080px;
+    margin:0 auto;
+    background:var(--paper);
+    color:var(--ink);
+    padding:64px 66px 48px;
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+  }
+
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .head-copy{ display:flex; flex-direction:column; gap:10px; max-width:80%; }
+  .card-eyebrow{ font-size:15px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .card-h1{ font-size:31px; font-weight:800; line-height:1.22; letter-spacing:-.01em; color:var(--ink); text-wrap:balance; }
+  .mark{ width:36px; height:36px; flex-shrink:0; margin-top:2px; }
+
+  /* ---- put your content block here: an inline <svg> diagram, a quote, --- */
+  /* ---- a mini-infographic — whatever the post's one visual claim is ---- */
+  .body-block{ display:flex; flex-direction:column; gap:22px; font-size:17px; line-height:1.6; color:#1E2530; }
+
+  figcaption{ font-size:17px; line-height:1.55; color:var(--slate); }
+  figcaption b{ color:var(--ink); }
+  figure{ margin:0; }
+
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:20px; border-top:1px solid rgba(8,13,24,.1);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="card">
+
+  <div class="head-row">
+    <div class="head-copy">
+      <div class="card-eyebrow"><!-- EYEBROW: e.g. "Request trace · naive retry" --></div>
+      <div class="card-h1"><!-- HEADLINE: the one claim this image makes --></div>
+    </div>
+    <!-- TFE mark — swap fill order for ink-on-paper (shown) vs white-on-ink card backgrounds -->
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <div class="body-block">
+    <!--
+      CONTENT SLOT.
+      For a system/mechanism diagram: hand-author inline <svg> here —
+      participant boxes, dashed lifelines, labeled arrows (solid = request,
+      dashed = response, --signal = the one hop the argument hinges on).
+      See ../examples/retry-trace.html for a fully worked sequence trace,
+      and the artifact-diagramming skill for the inline-SVG conventions
+      (viewBox sizing, marker arrowheads, label legibility, one figure one claim).
+    -->
+    <figure>
+      <!-- <svg viewBox="0 0 W H" role="img" aria-label="..."> ... </svg> -->
+      <figcaption><!-- one sentence: what the picture shows and why it matters --></figcaption>
+    </figure>
+  </div>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">linkedin.com/company/the-fintech-engineer</div>
+  </div>
+
+</div>
