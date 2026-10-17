@@ -1,6 +1,11 @@
-# Post images — generating branded LinkedIn PNGs
+# Post images — generating branded PNGs
 
-How to make the images that accompany The Fintech Engineer LinkedIn posts:
+This folder is the **toolkit** (templates, `export_png.py`, generic examples).
+A post's own editable sources and finished images live next to its copy, in
+`posts/<date>-<slug>/<channel>/source/` and `.../images/` — see "Where output
+goes" below.
+
+How to make the images that accompany The Fintech Engineer posts:
 a single "card" visual (a diagram, a trace, a mini-infographic) and/or the
 full post copy rendered as a branded document image. Read this before
 building a new one.
@@ -33,7 +38,7 @@ Five shapes — four have formal templates, one doesn't yet:
   tag, and a marker-highlight sweep through the headline (Signal blue,
   never an off-brand color). Use this for a scroll-stopping *hook* image
   — the first image on a post — not for every image on every post; it's
-  heavier than the standard card. See `mcc-merchant-category-code/collage-card.html`
+  heavier than the standard card. See `../posts/2026-09-14-mcc-merchant-category-code/linkedin/source/collage-card.html`
   for a fully worked one (a payment-terminal illustration with three
   annotated callouts for rewards/fraud/interchange), and the template's
   own header comment for the gotchas hit building it (callout text
@@ -42,11 +47,11 @@ Five shapes — four have formal templates, one doesn't yet:
   treatment adapted to a single dark-theme Instagram slide. Use alongside
   the plain Instagram carousel pattern below when you want the carousel to
   carry the same visual identity as a collage-style hook image. See
-  `mcc-merchant-category-code/ig-slide-1.html` through `ig-slide-5.html`
+  `../posts/2026-09-14-mcc-merchant-category-code/instagram/source/ig-slide-1.html` through `ig-slide-5.html`
   for a fully worked 5-slide arc (hook → mechanism → heuristic → detail →
   CTA) and the template's header comment for the arc breakdown.
 - **Instagram carousel slide** (plain, light-touch) — no `templates/` file
-  yet; copy the pattern from `reconciliation-drift/ig-slide-{1,2,3}.html`
+  yet; copy the pattern from `../posts/2026-09-14-reconciliation-drift/instagram/source/ig-slide-{1,2,3}.html`
   instead. A fixed `1080x1080` **exactly square** `.slide` (Instagram's own
   requirement, not a style choice), **dark theme** (Ink background,
   White-on-Ink — the other approved pairing, distinct from the light
@@ -100,7 +105,7 @@ point at the frame where it breaks. Reserve `--signal` for that one hop;
 everything else stays ink/slate so the accent actually reads as "look
 here."
 
-**Instagram carousel specifics** (see `reconciliation-drift/ig-slide-*.html`):
+**Instagram carousel specifics** (see `../posts/2026-09-14-reconciliation-drift/instagram/source/ig-slide-*.html`):
 
 - Structure `.slide` as a column flexbox: `head-row` at the top,
   `footer-row` at the bottom, and *everything else* wrapped in one
@@ -164,7 +169,7 @@ check the exported file's exact size and, if it's off, center-crop it to
 a true square as a final step:
 
 ```
-python3 export_png.py reconciliation-drift/ig-slide-1.html reconciliation-drift/ig-slide-1.png --window=1080,1180
+python3 export_png.py ../posts/2026-09-14-reconciliation-drift/instagram/source/ig-slide-1.html ../posts/2026-09-14-reconciliation-drift/instagram/images/instagram-carousel-1.png --window=1080,1180
 ```
 
 ```python
@@ -192,26 +197,31 @@ never bake it into the exported PNG itself.
 
 ## Where output goes
 
-Two locations, for two different purposes — don't collapse them into one:
+Everything for a post lives under one folder, grouped by channel — there is
+no separate "work in progress" tree to keep in sync:
 
-- **`post-images/<slug>/*.html` and `*.png`** — the editable sources and
-  their raw exports. Every diagram for a post lives here, flat, one HTML
-  + one PNG per image (`post-images/eventual-consistency-moving-money/`
-  is a fully worked example with seven diagrams, a hero card and a
-  5-slide carousel). This is where you iterate: edit the HTML, re-run
-  `export_png.py`, re-check. Never publish straight from here.
-- **`posts/<date>-<slug>/<channel>/images/*.png`** — the finished,
-  approved copies, sorted into the channel that actually uses them (see
-  the top-level project `README.md`'s "Per-channel folder layout"). A
-  card built for the LinkedIn post goes in `linkedin/images/`, an IG
-  carousel slide goes in `instagram/images/`, a Substack flow diagram
-  goes in `substack/images/`. These are the files that get uploaded to
-  LinkedIn/Instagram/Substack or fed into the n8n posting workflow.
+```
+posts/<date>-<slug>/<channel>/
+  source/   the editable HTML for each image (plus any working assets,
+            e.g. reference crops) — iterate here
+  images/   the finished, upload-ready PNGs for that channel
+```
 
-Once a PNG in `post-images/<slug>/` passes the QA checklist below, copy
-it (don't move it — keep the editable source tree intact) into the
-matching channel folder under `posts/`. If you edit and re-export after
-copying, re-copy to keep the two in sync.
+- Edit the HTML in `<channel>/source/`, then export **straight into**
+  `<channel>/images/` (`export_png.py <channel>/source/x.html
+  <channel>/images/x.png --window=...`). Re-export after any edit so the
+  two never drift — only the exported PNG ships.
+- A PNG's name in `images/` is its published name. Instagram slides are the
+  one place source and image names differ: `source/ig-slide-N.html` exports
+  to `images/instagram-carousel-N.png`.
+- A diagram used on more than one channel (e.g. a card that appears on
+  LinkedIn *and* in the Substack piece) has one HTML source, kept in the
+  channel it was first built for, and a copy of the PNG in each channel's
+  `images/` that uses it. If you re-export it, re-copy the PNG.
+- The finished PNGs are the files that get uploaded to LinkedIn / Instagram
+  / Substack or fed into the n8n posting workflow.
+- `post-images/examples/` and `post-images/templates/` stay here — they
+  aren't tied to any one post.
 
 ## Diagram QA checklist — before calling an SVG diagram done
 

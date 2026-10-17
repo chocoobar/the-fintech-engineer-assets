@@ -27,11 +27,11 @@ brand-identity/    Finalized identity kit (v1.0) — logos, colors, type, Linked
                     images, favicons, brand-guide.pdf. Canonical source of truth for
                     every visual choice below. Start with brand-identity/README.txt.
 post-images/        The toolkit for generating branded post images (see its own
-                    README.md for the full workflow). Templates + export script +
-                    worked examples, including everything for the reconciliation-drift
-                    post as a live reference.
-posts/              Published/drafted post copy (post.md per post, with its final
-                    generated images alongside it).
+                    README.md for the full workflow): templates, export script and
+                    generic examples. Holds no per-post files.
+posts/              Everything for each post, grouped as posts/<date>-<slug>/<channel>/
+                    — the copy, the finished images, and the editable image sources
+                    all together (see "Per-channel folder layout" below).
 ```
 
 ## Brand, in brief
@@ -61,6 +61,10 @@ is just a quick reference.
 See **`post-images/README.md`** for the full, authoritative workflow —
 this is just the short version:
 
+0. Work inside the post's own channel folder — copy the template you need
+   into `posts/<date>-<slug>/<channel>/source/` (create it if it's the
+   first image) and edit it there; the finished PNG goes in the sibling
+   `images/` folder.
 1. Copy the template that fits your content:
    - `post-images/templates/card-template.html` — one visual claim (a
      diagram, a trace, a comparison/infographic). 1080px wide, LinkedIn.
@@ -72,16 +76,16 @@ this is just the short version:
      marker-highlight headline (still Ink/Signal/Paper/Slate only — no
      off-brand colors). Use for the scroll-stopping *first* image on a
      post, not every image on every post. See
-     `post-images/mcc-merchant-category-code/collage-card.html` for a
+     `posts/2026-09-14-mcc-merchant-category-code/linkedin/source/collage-card.html` for a
      fully worked example.
    - `post-images/templates/collage-ig-slide-template.html` — the same
      collage treatment for a single Instagram slide, for when you want
      the carousel to match a collage-style hook image. See
-     `post-images/mcc-merchant-category-code/ig-slide-1.html` through
+     `posts/2026-09-14-mcc-merchant-category-code/instagram/source/ig-slide-1.html` through
      `ig-slide-5.html` for a fully worked 5-slide arc.
    - For a plain (non-collage) **Instagram carousel**, there's no formal template yet (see
      "Open items" below) — copy the pattern from
-     `post-images/reconciliation-drift/ig-slide-*.html` instead: a fixed
+     `posts/2026-09-14-reconciliation-drift/instagram/source/ig-slide-*.html` instead: a fixed
      `1080x1080` `.slide` container, **exactly square (1:1)** — this is
      Instagram's own recommendation, not a stylistic choice, so don't
      drift to 4:5 or any other ratio. **Dark theme** (Ink background,
@@ -105,8 +109,10 @@ this is just the short version:
 3. Open the HTML file directly in a browser to sanity-check layout.
 4. Export with `post-images/export_png.py`:
    ```
-   python3 post-images/export_png.py <input.html> <output.png> --window=<W>,<H>
+   python3 post-images/export_png.py <channel>/source/<name>.html <channel>/images/<name>.png --window=<W>,<H>
    ```
+   (with `<channel>` = `posts/<date>-<slug>/linkedin` etc.; Instagram's
+   `source/ig-slide-N.html` exports to `images/instagram-carousel-N.png`)
    - Card-template: `--window=1080,2400`
    - Doc-template: `--window=920,3400`
    - Instagram slide (fixed 1080x1080 square canvas): `--window=1080,1180`
@@ -137,8 +143,12 @@ this is just the short version:
    floating disconnected nearby. Check this on the actual exported PNG at
    full resolution, not the browser preview — narrow preview panes clip
    exactly the kind of overflow/overlap this checklist catches.
-6. Save the final PNG(s) into that channel's own folder — see "Per-channel
-   folder layout" below.
+6. The exported PNG is already in its channel's `images/` folder — there is
+   no separate copy step. Re-export after any edit to the HTML. If a
+   diagram is also used by another channel (e.g. a LinkedIn card reused in
+   the Substack piece), copy the PNG into that channel's `images/` too and
+   keep the single HTML source in the channel it was built for. See
+   "Per-channel folder layout" below.
 
 ## Per-channel folder layout
 
@@ -157,11 +167,15 @@ posts/<date>-<slug>/
                                teaser for a Substack post" below
     images/
       *.png                    card-template / doc-template exports for this post
+    source/
+      *.html                   editable source for each image above (+ any working assets)
   instagram/
     caption.txt                the carousel's caption — see "Writing an Instagram
                                caption" below
     images/
       instagram-carousel-1.png ... -N.png
+    source/
+      ig-slide-1.html ... -N.html   (export to images/instagram-carousel-N.png)
   substack/
     substack-post.md      long-form markdown source (headers, code blocks, tables)
     substack-post.txt      plain-text version, no markdown, images swapped for
@@ -170,6 +184,8 @@ posts/<date>-<slug>/
     images/
       *.png               one PNG per placeholder in substack-post.txt, plus
                            a hero/cover image
+    source/
+      *.html              editable source for each image above
 ```
 
 Only build the channel folders a given post actually targets — a
@@ -305,14 +321,13 @@ slide's text:
 `linkedin/post.md` plus two LinkedIn images (a trace diagram and a
 pictorial comparison card, both `card-template`-based, in
 `linkedin/images/`) and a 3-slide dark-theme Instagram carousel in
-`instagram/images/`. Its sources live in
-`post-images/reconciliation-drift/` if you want to see exactly how each
-image was built.
+`instagram/images/`. Each channel's `source/` folder holds the HTML each
+image was built from, if you want to see exactly how it was done.
 
 `posts/2026-09-14-mcc-merchant-category-code/` is a second worked
 example, covering the pieces the first one doesn't: a
 `collage-card-template`-based hook image, a 5-slide collage-style
-Instagram carousel (`post-images/mcc-merchant-category-code/`), and a
+Instagram carousel (`instagram/source/`), and a
 trimmed `linkedin/linkedin-post.txt` next to the full-length
 `linkedin/post.md`.
 
@@ -322,14 +337,15 @@ plus a `substack-teaser-post.txt` since this post also has a long-form
 version), an `instagram/` folder (5-slide carousel with real inline-SVG
 diagrams, not text-only slides, plus its own `caption.txt`), and a
 `substack/` folder (full long-form piece plus seven flow-diagram images
-and a hero image). Its sources live in
-`post-images/eventual-consistency-moving-money/`.
+and a hero image). Every channel folder has its own `source/` with the
+editable HTML behind its images (the shared `race-trace` card's single
+source is in `linkedin/source/`).
 
 ## Open items
 
 - No formal `templates/carousel-template.html` for the *plain* Instagram
   style yet — the worked `ig-slide-*.html` files in
-  `post-images/reconciliation-drift/` are the pattern to copy until one
+  `posts/2026-09-14-reconciliation-drift/instagram/source/` are the pattern to copy until one
   gets promoted to `templates/`. (The collage style already has a
   template: `post-images/templates/collage-ig-slide-template.html`.)
 - Confirm `thefintechengineer.dev` registration status and update this
