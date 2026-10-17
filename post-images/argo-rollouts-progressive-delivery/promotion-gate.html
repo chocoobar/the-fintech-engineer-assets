@@ -1,0 +1,126 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{
+    font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
+  }
+
+  /* Flat, full-bleed export: no shadow, no radius, no surrounding margin —
+     this IS the uploadable asset, edge to edge. Do not add a shadow/radius/
+     outer padding back in — see README "Why the card is flat, not floating". */
+  .card{
+    width:1080px;
+    margin:0 auto;
+    background:var(--paper);
+    color:var(--ink);
+    padding:64px 66px 48px;
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+  }
+
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .head-copy{ display:flex; flex-direction:column; gap:10px; max-width:80%; }
+  .card-eyebrow{ font-size:15px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .card-h1{ font-size:31px; font-weight:800; line-height:1.22; letter-spacing:-.01em; color:var(--ink); text-wrap:balance; }
+  .mark{ width:36px; height:36px; flex-shrink:0; margin-top:2px; }
+
+  /* ---- put your content block here: an inline <svg> diagram, a quote, --- */
+  /* ---- a mini-infographic — whatever the post's one visual claim is ---- */
+  .body-block{ display:flex; flex-direction:column; gap:22px; font-size:17px; line-height:1.6; color:#1E2530; }
+
+  figcaption{ font-size:17px; line-height:1.55; color:var(--slate); }
+  figcaption b{ color:var(--ink); }
+  figure{ margin:0; }
+
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:20px; border-top:1px solid rgba(8,13,24,.1);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+  .diagram-wrap{ width:100%; }
+  .diagram-wrap svg{ display:block; width:100%; height:auto; }
+  figcaption{ margin-top:14px; font-size:17px; line-height:1.55; color:var(--slate); }
+  figcaption b{ color:var(--ink); }
+  figure{ margin:0; }
+</style>
+
+<div class="card">
+
+  <div class="head-row">
+    <div class="head-copy">
+      <div class="card-eyebrow">Mechanism &middot; the promotion gate</div>
+      <div class="card-h1">A canary only helps if something is allowed to say no</div>
+    </div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <figure class="diagram-wrap">
+    <svg viewBox="-2 0 1004 490" role="img" aria-label="Flow of an Argo Rollouts canary. A merged Git manifest is synced by Argo CD, traffic moves to 5 percent, and an AnalysisRun gate checks approval rate, decline mix, p99 latency, ledger write errors and sample size. Pass moves on to 25 percent through 100 percent. Inconclusive pauses. Fail aborts to stable v1, after which the commit must be reverted in Git.">
+      <defs>
+        <marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 Z" fill="#080D18"/></marker>
+        <marker id="arrowSignal" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0,0 L10,5.5 L0,11 Z" fill="#2F55E8"/></marker>
+        <marker id="arrowSlate" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L9,5 L0,10 Z" fill="#5B6472"/></marker>
+      </defs>
+      <g font-family="Inter, sans-serif">
+        <rect x="0" y="60" width="140" height="70" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.4"/><text x="70.0" y="92.0" text-anchor="middle" font-size="13.5" font-weight="700" fill="#080D18">Git</text><text x="70.0" y="110.0" text-anchor="middle" font-size="11" font-weight="500" fill="#5B6472">merge v2 manifest</text>
+        <rect x="187" y="60" width="140" height="70" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.4"/><text x="257.0" y="92.0" text-anchor="middle" font-size="13.5" font-weight="700" fill="#080D18">Argo CD</text><text x="257.0" y="110.0" text-anchor="middle" font-size="11" font-weight="500" fill="#5B6472">syncs Rollout spec</text>
+        <rect x="374" y="60" width="140" height="70" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.4"/><text x="444.0" y="92.0" text-anchor="middle" font-size="13.5" font-weight="700" fill="#080D18">Canary 5%</text><text x="444.0" y="110.0" text-anchor="middle" font-size="11" font-weight="500" fill="#5B6472">setWeight: 5</text>
+        <rect x="858" y="60" width="140" height="70" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.4"/><text x="928.0" y="92.0" text-anchor="middle" font-size="13.5" font-weight="700" fill="#080D18">25% &#8594; 100%</text><text x="928.0" y="110.0" text-anchor="middle" font-size="11" font-weight="500" fill="#5B6472">gate at every step</text>
+        <line x1="143" y1="95" x2="184" y2="95" stroke="#080D18" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="163.5" y="86" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5B6472">sync</text>
+        <line x1="330" y1="95" x2="371" y2="95" stroke="#080D18" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="350.5" y="86" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5B6472">apply</text>
+        <line x1="517" y1="95" x2="558" y2="95" stroke="#080D18" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="537.5" y="86" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5B6472">then</text>
+        <line x1="814" y1="95" x2="855" y2="95" stroke="#080D18" stroke-width="1.8" marker-end="url(#arrow)"/>
+        <text x="834.5" y="86" text-anchor="middle" font-size="10.5" font-weight="600" fill="#5B6472">pass</text>
+        <rect x="561" y="40" width="250" height="190" rx="10" fill="#FFFFFF" stroke="#080D18" stroke-width="2.2"/>
+        <text x="577" y="66" font-size="13.5" font-weight="800" fill="#080D18">THE GATE &#183; AnalysisRun</text>
+        <line x1="561" y1="78" x2="811" y2="78" stroke="#080D18" stroke-opacity=".15"/>
+        <text x="577" y="102" font-size="12.5" font-weight="600" fill="#080D18">approval rate &#8805; 97%</text>
+        <text x="577" y="124" font-size="12.5" font-weight="600" fill="#080D18">decline-reason mix unchanged</text>
+        <text x="577" y="146" font-size="12.5" font-weight="600" fill="#080D18">p99 latency &lt; 400 ms</text>
+        <text x="577" y="168" font-size="12.5" font-weight="600" fill="#080D18">ledger write errors = 0</text>
+        <text x="577" y="190" font-size="12.5" font-weight="600" fill="#080D18">samples &#8805; 500, else inconclusive</text>
+        <text x="577" y="216" font-size="11" font-weight="600" fill="#5B6472">Prometheus &#183; every 1m &#183; failureLimit 2</text>
+        <path d="M 640,40 C 640,2 740,2 740,38" fill="none" stroke="#5B6472" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arrowSlate)"/>
+        <text x="752" y="16" font-size="11" font-weight="700" fill="#5B6472">inconclusive:</text>
+        <text x="752" y="30" font-size="11" font-weight="600" fill="#5B6472">pause, keep sampling</text>
+        <line x1="686" y1="230" x2="686" y2="276" stroke="#2F55E8" stroke-width="2.4" marker-end="url(#arrowSignal)"/>
+        <text x="698" y="258" font-size="12" font-weight="800" fill="#2F55E8">fail</text>
+        <rect x="561" y="280" width="250" height="70" rx="9" fill="#EAEFFD" stroke="#2F55E8" stroke-width="1.6"/><text x="686.0" y="312.0" text-anchor="middle" font-size="13.5" font-weight="700" fill="#080D18">ABORT</text><text x="686.0" y="330.0" text-anchor="middle" font-size="11" font-weight="500" fill="#5B6472">canary scaled to 0, stable v1 takes 100%</text>
+        <line x1="686" y1="350" x2="686" y2="396" stroke="#2F55E8" stroke-width="2.4" marker-end="url(#arrowSignal)"/>
+        <text x="698" y="378" font-size="11" font-weight="600" fill="#5B6472">Argo CD: app Degraded</text>
+        <rect x="561" y="400" width="250" height="70" rx="9" fill="#FFFFFF" stroke="#2F55E8" stroke-width="1.6"/><text x="686.0" y="432.0" text-anchor="middle" font-size="13.5" font-weight="700" fill="#080D18">Revert the commit</text><text x="686.0" y="450.0" text-anchor="middle" font-size="11" font-weight="500" fill="#5B6472">Git must match what is live</text>
+        <rect x="0" y="210" width="500" height="260" rx="10" fill="#080D18"/>
+        <text x="18" y="238" font-size="11" font-weight="700" fill="#9AA3B2" letter-spacing=".08em">ROLLOUT SPEC &#183; STEPS BEHIND THE FLOW</text>
+        <text x="18" y="266" xml:space="preserve" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12.5" font-weight="500" fill="#F1F3F7">strategy:</text>
+        <text x="18" y="285" xml:space="preserve" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12.5" font-weight="500" fill="#F1F3F7">&#160;&#160;canary:</text>
+        <text x="18" y="304" xml:space="preserve" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12.5" font-weight="500" fill="#F1F3F7">&#160;&#160;&#160;&#160;steps:</text>
+        <text x="18" y="323" xml:space="preserve" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12.5" font-weight="500" fill="#F1F3F7">&#160;&#160;&#160;&#160;-&#160;setWeight:&#160;5</text>
+        <text x="18" y="342" xml:space="preserve" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12.5" font-weight="500" fill="#F1F3F7">&#160;&#160;&#160;&#160;-&#160;analysis:</text>
+        <text x="18" y="361" xml:space="preserve" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12.5" font-weight="500" fill="#F1F3F7">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;templates:</text>
+        <text x="18" y="380" xml:space="preserve" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12.5" font-weight="500" fill="#F1F3F7">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;-&#160;templateName:&#160;auth-gate</text>
+        <text x="18" y="399" xml:space="preserve" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12.5" font-weight="500" fill="#F1F3F7">&#160;&#160;&#160;&#160;-&#160;setWeight:&#160;25</text>
+        <text x="18" y="418" xml:space="preserve" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12.5" font-weight="500" fill="#F1F3F7">&#160;&#160;&#160;&#160;-&#160;pause:&#160;{duration:&#160;5m}</text>
+        <text x="18" y="437" xml:space="preserve" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12.5" font-weight="500" fill="#F1F3F7">&#160;&#160;&#160;&#160;-&#160;setWeight:&#160;100</text>
+      </g>
+    </svg>
+    <figcaption>Argo CD applies the Rollout spec; Argo Rollouts shifts traffic in steps and runs the <b>AnalysisRun</b> between them. The fail path ends in Git, not in the cluster: an abort restores traffic, only a revert restores the source of truth.</figcaption>
+  </figure>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">linkedin.com/company/the-fintech-engineer</div>
+  </div>
+
+</div>

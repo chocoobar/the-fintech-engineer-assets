@@ -1,0 +1,123 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{
+    font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
+  }
+
+  /* Flat, full-bleed export: no shadow, no radius, no surrounding margin —
+     this IS the uploadable asset, edge to edge. Do not add a shadow/radius/
+     outer padding back in — see README "Why the card is flat, not floating". */
+  .card{
+    width:1080px;
+    margin:0 auto;
+    background:var(--paper);
+    color:var(--ink);
+    padding:64px 66px 48px;
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+  }
+
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .head-copy{ display:flex; flex-direction:column; gap:10px; max-width:80%; }
+  .card-eyebrow{ font-size:15px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .card-h1{ font-size:31px; font-weight:800; line-height:1.22; letter-spacing:-.01em; color:var(--ink); text-wrap:balance; }
+  .mark{ width:36px; height:36px; flex-shrink:0; margin-top:2px; }
+
+  /* ---- put your content block here: an inline <svg> diagram, a quote, --- */
+  /* ---- a mini-infographic — whatever the post's one visual claim is ---- */
+  .body-block{ display:flex; flex-direction:column; gap:22px; font-size:17px; line-height:1.6; color:#1E2530; }
+
+  figcaption{ font-size:17px; line-height:1.55; color:var(--slate); }
+  figcaption b{ color:var(--ink); }
+  figure{ margin:0; }
+
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:20px; border-top:1px solid rgba(8,13,24,.1);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+  .diagram-wrap{ width:100%; }
+  .diagram-wrap svg{ display:block; width:100%; height:auto; }
+  figcaption{ margin-top:14px; font-size:17px; line-height:1.55; color:var(--slate); }
+  figcaption b{ color:var(--ink); }
+  figure{ margin:0; }
+</style>
+
+<div class="card">
+
+  <div class="head-row">
+    <div class="head-copy">
+      <div class="card-eyebrow">Blast radius &middot; rolling update vs canary</div>
+      <div class="card-h1">Same bug, same traffic: ~800 wrongly declined payments, or ~12</div>
+    </div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <figure class="diagram-wrap">
+    <svg viewBox="0 0 1080 480" role="img" aria-label="Same buggy release shipped two ways. A rolling update reaches 100% of traffic in 4 minutes and is stopped by a human after about 10 minutes, with about 800 wrongly declined payments. An Argo Rollouts canary holds at 5% of traffic, fails three automated approval-rate checks, and aborts after 3 minutes with about 12 wrongly declined payments.">
+      <g font-family="Inter, sans-serif">
+        <line x1="190" y1="56" x2="190" y2="388" stroke="#080D18" stroke-opacity=".08"/><text x="190" y="44" text-anchor="middle" font-size="11.5" font-weight="600" fill="#5B6472">0</text><line x1="330" y1="56" x2="330" y2="388" stroke="#080D18" stroke-opacity=".08"/><text x="330" y="44" text-anchor="middle" font-size="11.5" font-weight="600" fill="#5B6472">2</text><line x1="470" y1="56" x2="470" y2="388" stroke="#080D18" stroke-opacity=".08"/><text x="470" y="44" text-anchor="middle" font-size="11.5" font-weight="600" fill="#5B6472">4</text><line x1="610" y1="56" x2="610" y2="388" stroke="#080D18" stroke-opacity=".08"/><text x="610" y="44" text-anchor="middle" font-size="11.5" font-weight="600" fill="#5B6472">6</text><line x1="750" y1="56" x2="750" y2="388" stroke="#080D18" stroke-opacity=".08"/><text x="750" y="44" text-anchor="middle" font-size="11.5" font-weight="600" fill="#5B6472">8</text><line x1="890" y1="56" x2="890" y2="388" stroke="#080D18" stroke-opacity=".08"/><text x="890" y="44" text-anchor="middle" font-size="11.5" font-weight="600" fill="#5B6472">10</text><line x1="1030" y1="56" x2="1030" y2="388" stroke="#080D18" stroke-opacity=".08"/><text x="1030" y="44" text-anchor="middle" font-size="11.5" font-weight="600" fill="#5B6472">12</text>
+        <text x="0" y="44" font-size="11.5" font-weight="700" fill="#5B6472" letter-spacing=".08em">MINUTES SINCE DEPLOY</text>
+        <line x1="190" y1="52" x2="1030" y2="52" stroke="#080D18" stroke-opacity=".3"/>
+
+        <!-- lane A: rolling update -->
+        <text x="0" y="104" font-size="14" font-weight="800" fill="#080D18">ROLLING UPDATE</text>
+        <text x="0" y="122" font-size="11.5" font-weight="500" fill="#5B6472">Deployment · readiness</text>
+        <text x="0" y="137" font-size="11.5" font-weight="500" fill="#5B6472">probes only</text>
+        <polygon points="190,160 470,80 890,80 960,160" fill="#2F55E8" fill-opacity=".14" stroke="#2F55E8" stroke-width="2" stroke-linejoin="round"/>
+        <line x1="190" y1="160" x2="1030" y2="160" stroke="#080D18" stroke-opacity=".3"/>
+        <text x="660" y="132" text-anchor="middle" font-size="13" font-weight="700" fill="#080D18">bug live on 100% of traffic</text>
+        <text x="330" y="180" text-anchor="middle" font-size="11.5" font-weight="600" font-style="italic" fill="#5B6472">readiness passes at every step</text>
+        <line x1="890" y1="62" x2="890" y2="160" stroke="#080D18" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="882" y="100" text-anchor="end" font-size="12" font-weight="700" fill="#080D18">a human notices</text>
+        <text x="882" y="116" text-anchor="end" font-size="11" font-weight="600" fill="#5B6472">approval-rate dip</text>
+
+        <rect x="190" y="196" width="430" height="52" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.3"/>
+        <text x="208" y="219" font-size="17" font-weight="800" fill="#2F55E8">~800</text>
+        <text x="262" y="219" font-size="15" font-weight="700" fill="#080D18">wrongly declined payments</text>
+        <text x="208" y="238" font-size="11.5" font-weight="500" fill="#5B6472">~10 min of exposure at ~80 declines a minute</text>
+
+        <line x1="0" y1="274" x2="1080" y2="274" stroke="#080D18" stroke-opacity=".12"/>
+
+        <!-- lane B: canary -->
+        <text x="0" y="326" font-size="14" font-weight="800" fill="#080D18">ARGO ROLLOUTS</text>
+        <text x="0" y="344" font-size="11.5" font-weight="500" fill="#5B6472">canary · AnalysisRun</text>
+        <text x="0" y="359" font-size="11.5" font-weight="500" fill="#5B6472">every 1 min</text>
+        <polygon points="190,380 190,376 400,376 410.5,380" fill="#2F55E8" fill-opacity=".14" stroke="#2F55E8" stroke-width="2.4" stroke-linejoin="round"/>
+        <line x1="190" y1="380" x2="1030" y2="380" stroke="#080D18" stroke-opacity=".3"/>
+        <text x="192" y="350" font-size="12" font-weight="700" fill="#2F55E8">5% canary</text>
+        <line x1="260" y1="290" x2="260" y2="380" stroke="#080D18" stroke-opacity=".45" stroke-dasharray="3 3"/>
+        <line x1="330" y1="290" x2="330" y2="380" stroke="#080D18" stroke-opacity=".45" stroke-dasharray="3 3"/>
+        <line x1="400" y1="290" x2="400" y2="380" stroke="#080D18" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="267" y="306" font-size="11" font-weight="700" fill="#5B6472">fail 1</text>
+        <text x="337" y="306" font-size="11" font-weight="700" fill="#5B6472">fail 2</text>
+        <text x="408" y="306" font-size="12" font-weight="800" fill="#080D18">check 3: fail → ABORT</text>
+        <text x="408" y="323" font-size="11" font-weight="600" fill="#5B6472">approval 89% &lt; 97% floor</text>
+        <text x="408" y="366" font-size="11.5" font-weight="600" font-style="italic" fill="#5B6472">traffic back on stable v1</text>
+        <text x="694.0" y="366" font-size="11.5" font-weight="600" font-style="italic" fill="#5B6472">the other 95% never saw v2</text>
+
+        <rect x="190" y="410" width="430" height="52" rx="9" fill="#FFFFFF" stroke="#080D18" stroke-width="1.3"/>
+        <text x="208" y="433" font-size="17" font-weight="800" fill="#2F55E8">~12</text>
+        <text x="250" y="433" font-size="15" font-weight="700" fill="#080D18">wrongly declined payments</text>
+        <text x="208" y="452" font-size="11.5" font-weight="500" fill="#5B6472">3 min of exposure at ~4 declines a minute</text>
+      </g>
+    </svg>
+    <figcaption>Blue is the share of traffic running the buggy v2. Both releases return HTTP 200, so no error-rate alert fires either way. The rolling update stops when a person reads a dashboard; the canary stops when a query crosses its threshold. <b>Illustrative numbers:</b> 1,000 auths/min, 8% wrongly declined.</figcaption>
+  </figure>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">linkedin.com/company/the-fintech-engineer</div>
+  </div>
+
+</div>
