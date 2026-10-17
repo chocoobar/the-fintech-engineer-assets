@@ -1,0 +1,111 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+
+  .slide{
+    width:1080px;
+    height:1080px;
+    margin:0 auto;
+    background:var(--ink);
+    color:var(--paper);
+    padding:56px 64px 48px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .mark{ width:34px; height:34px; flex-shrink:0; }
+  .card-eyebrow{ font-size:14px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .swipe{ font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--signal); }
+
+  .content{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+
+  .stat{ font-size:56px; font-weight:800; line-height:1.12; letter-spacing:-.01em; margin:0; }
+  .stat.paper{ color:var(--paper); }
+  .stat.signal{ color:var(--signal); }
+
+  .lede{ font-size:26px; font-weight:500; color:var(--paper); margin:0; }
+  .sub{ font-size:20px; font-weight:400; line-height:1.5; color:var(--slate); margin:0; }
+
+  .rule{ width:80px; height:4px; background:var(--signal); border:0; margin:0; }
+
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:18px; border-top:1px solid rgba(241,243,247,.14);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--paper); }
+  .signature{ font-size:14px; font-weight:500; color:var(--slate); }
+
+  .h1{ font-size:40px; font-weight:800; line-height:1.18; letter-spacing:-.01em; color:var(--paper); margin:0; }
+  .diagram svg{ display:block; width:100%; height:auto; }
+  .items{ display:flex; flex-direction:column; gap:26px; }
+  .item{ display:flex; gap:22px; align-items:flex-start; }
+  .num{ width:46px; height:46px; border-radius:50%; border:2px solid var(--signal); color:var(--signal); font-weight:800; font-size:22px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .item .t{ font-size:27px; font-weight:700; color:var(--paper); margin:0 0 6px; line-height:1.2; }
+  .item .d{ font-size:21px; font-weight:400; color:#A9B1BF; margin:0; line-height:1.4; }
+  .checklist{ display:flex; flex-direction:column; gap:24px; }
+  .check-item{ display:flex; gap:16px; align-items:flex-start; }
+  .check-item .arrow{ color:var(--signal); font-weight:800; font-size:23px; line-height:1.3; flex-shrink:0; }
+  .check-item p{ margin:0; font-size:23px; font-weight:500; color:var(--paper); line-height:1.3; }
+  .cta{ display:flex; flex-direction:column; gap:12px; background:rgba(47,85,232,0.16); border:1.5px solid var(--signal); border-radius:16px; padding:26px 28px; }
+  .cta .title{ font-size:27px; font-weight:700; color:var(--paper); }
+  .cta .link{ font-size:19px; font-weight:500; color:#8FA3F0; }
+</style>
+
+<div class="slide">
+
+  <div class="head-row">
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#F1F3F7"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#F1F3F7"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#F1F3F7"/></g></g></svg>
+    <div style="text-align:right; display:flex; flex-direction:column; gap:5px;">
+      <div class="card-eyebrow">Argo Rollouts &middot; 3/5</div>
+      <div class="swipe">Swipe &rarr;</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <p class="h1" style="margin-bottom:26px;">Give the release something that can say no.</p>
+    <div class="diagram"><svg viewBox="-3 -3 958 646" role="img" aria-label="With an Argo Rollouts canary, 95 percent of traffic stays on stable v1 and 5 percent goes to v2. An AnalysisRun queries Prometheus and checks that approval rate is at least 97 percent. Pass moves to 25 percent. Fail aborts and sends traffic back to stable. About 12 wrongly declined payments instead of about 800.">
+<defs><marker id="aP" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L13,7 L0,14 Z" fill="#F1F3F7"/></marker><marker id="aS" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" refX="11" refY="7" orient="auto"><path d="M0,0 L13,7 L0,14 Z" fill="#2F55E8"/></marker></defs>
+<g font-family="Inter, sans-serif">
+<text x="0" y="30" font-size="22" font-weight="700" fill="#A9B1BF">stable v1 &#183; 95%</text>
+<text x="952" y="30" text-anchor="end" font-size="22" font-weight="800" fill="#2F55E8">canary v2 &#183; 5%</text>
+<rect x="0" y="46" width="900" height="64" rx="10" fill="#0F1626" stroke="#F1F3F7" stroke-opacity=".7" stroke-width="2"/>
+<rect x="904" y="46" width="48" height="64" rx="10" fill="#2F55E8"/>
+<line x1="928" y1="112" x2="928" y2="198" stroke="#F1F3F7" stroke-width="3" marker-end="url(#aP)"/>
+<text x="912" y="162" text-anchor="end" font-size="20" font-weight="700" fill="#F1F3F7">queries Prometheus</text>
+<rect x="500" y="204" width="452" height="146" rx="14" fill="#0F1626" stroke="#F1F3F7" stroke-width="3"/>
+<text x="526" y="246" font-size="27" font-weight="800" fill="#F1F3F7">AnalysisRun gate</text>
+<text x="526" y="284" font-size="23" font-weight="600" fill="#F1F3F7">approval rate &#8805; 97% ?</text>
+<text x="526" y="322" font-size="19" font-weight="500" fill="#A9B1BF">every 1 min &#183; failureLimit 2</text>
+<line x1="620" y1="352" x2="620" y2="438" stroke="#F1F3F7" stroke-width="3" marker-end="url(#aP)"/>
+<text x="634" y="402" font-size="21" font-weight="700" fill="#F1F3F7">pass</text>
+<line x1="832" y1="352" x2="832" y2="438" stroke="#2F55E8" stroke-width="3" marker-end="url(#aS)"/>
+<text x="846" y="402" font-size="21" font-weight="800" fill="#2F55E8">fail</text>
+<rect x="500" y="444" width="216" height="104" rx="14" fill="#0F1626" stroke="#F1F3F7" stroke-opacity=".7" stroke-width="2"/>
+<text x="608" y="484" text-anchor="middle" font-size="24" font-weight="800" fill="#F1F3F7">Next step</text>
+<text x="608" y="518" text-anchor="middle" font-size="21" font-weight="500" fill="#A9B1BF">25% &#8594; 100%</text>
+<rect x="736" y="444" width="216" height="104" rx="14" fill="#2F55E8" fill-opacity=".16" stroke="#2F55E8" stroke-width="3"/>
+<text x="844" y="484" text-anchor="middle" font-size="24" font-weight="800" fill="#F1F3F7">ABORT</text>
+<text x="844" y="518" text-anchor="middle" font-size="21" font-weight="500" fill="#A9B1BF">back on stable v1</text>
+<text x="0" y="300" font-size="100" font-weight="800" fill="#2F55E8" letter-spacing="-2">~12</text>
+<text x="0" y="344" font-size="26" font-weight="700" fill="#F1F3F7">wrongly declined payments,</text>
+<text x="0" y="380" font-size="26" font-weight="700" fill="#F1F3F7">not ~800</text>
+<text x="0" y="424" font-size="21" font-weight="500" fill="#A9B1BF">3 checks, then the gate says no</text>
+</g></svg></div>
+  </div>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">linkedin.com/company/the-fintech-engineer</div>
+  </div>
+
+</div>

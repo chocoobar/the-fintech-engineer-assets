@@ -1,0 +1,12 @@
+Every pod Ready. Every probe green. 8% of cards declined. Not one alert fired. 🚦
+
+That's the gap in a plain rolling update. Kubernetes asks "is the pod alive?" Nobody asks "is this version still approving payments?" With a canary and an approval-rate gate, that bug costs ~12 declined payments instead of ~800. 🎯
+
+Swipe through for the mechanism → the gate → the four places canaries quietly fail (hint: an abort is not a revert). 👉
+
+Full post link in bio.
+
+.
+.
+.
+#fintech #kubernetes #argocd #argorollouts #devops #platformengineering #gitops #progressivedelivery #softwareengineering #payments
