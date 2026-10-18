@@ -165,6 +165,9 @@ posts/<date>-<slug>/
                                separate LinkedIn post whose only job is to send readers
                                to the full Substack piece — see "Writing a LinkedIn
                                teaser for a Substack post" below
+    personal-share-short.txt   a short first-person version for Naren's personal LinkedIn
+                               profile (~500 chars) — see "Writing a personal-profile
+                               share" below. A longer personal-share-post.txt is optional.
     images/
       *.png                    card-template / doc-template exports for this post
     source/
@@ -294,6 +297,22 @@ still deserve a real post, not just a link-out). Save it as
   teaser's job is clicks to the article, not comments on the post.
 - Same emoji-forward voice and hashtag block as every other LinkedIn
   post; no character-limit trimming step needed since it's already short.
+
+## Writing a personal-profile share
+
+The company-page post is the source of record; Naren also shares each post
+from his personal LinkedIn profile with his own thoughts on top. Save that as
+`linkedin/personal-share-short.txt`:
+
+- Short — roughly 400-600 characters. Lead with one punchy line of the
+  takeaway, give the single sharpest number or mechanism from the full post,
+  then one line of opinion ("if you ship payment code, ...").
+- First person, same emoji-forward voice and a 3-5 tag hashtag block.
+- Close with a link-out to wherever the full piece lives (the Substack URL
+  if there is one, otherwise `linkedin.com/company/the-fintech-engineer`)
+  instead of an engagement question — the company post carries that.
+- For a longer, story-style version, add `personal-share-post.txt` alongside
+  (see `posts/2026-09-27-eventual-consistency-moving-money/linkedin/`).
 
 ## Writing an Instagram caption
 
