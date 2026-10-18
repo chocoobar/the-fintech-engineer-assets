@@ -1,0 +1,102 @@
+<!--
+  CARD TEMPLATE — single-visual LinkedIn image (a diagram, a trace, a quote card).
+  Copy this file, fill in the marked slots, then export with export_png.py.
+  See ../README.md for the full workflow and design rules.
+-->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap">
+<style>
+  :root{
+    --ink:#080D18;
+    --signal:#2F55E8;
+    --paper:#F1F3F7;
+    --slate:#5B6472;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; background:#FFFFFF; }
+  body{
+    font-family:'Inter',ui-sans-serif,system-ui,sans-serif;
+  }
+
+  /* Flat, full-bleed export: no shadow, no radius, no surrounding margin —
+     this IS the uploadable asset, edge to edge. Do not add a shadow/radius/
+     outer padding back in — see README "Why the card is flat, not floating". */
+  .card{
+    width:1080px;
+    margin:0 auto;
+    background:var(--paper);
+    color:var(--ink);
+    padding:64px 66px 48px;
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+  }
+
+  .head-row{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+  .head-copy{ display:flex; flex-direction:column; gap:10px; max-width:80%; }
+  .card-eyebrow{ font-size:15px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--signal); }
+  .card-h1{ font-size:31px; font-weight:800; line-height:1.22; letter-spacing:-.01em; color:var(--ink); text-wrap:balance; }
+  .mark{ width:36px; height:36px; flex-shrink:0; margin-top:2px; }
+
+  /* ---- put your content block here: an inline <svg> diagram, a quote, --- */
+  /* ---- a mini-infographic — whatever the post's one visual claim is ---- */
+  .body-block{ display:flex; flex-direction:column; gap:22px; font-size:17px; line-height:1.6; color:#1E2530; }
+
+  figcaption{ font-size:17px; line-height:1.55; color:var(--slate); }
+  figcaption b{ color:var(--ink); }
+  figure{ margin:0; }
+
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:20px; border-top:1px solid rgba(8,13,24,.1);
+  }
+  .wordmark{ font-size:16px; font-weight:700; letter-spacing:.06em; color:var(--ink); }
+  .signature{ font-size:16px; font-weight:500; color:var(--slate); }
+
+  /* chart */
+  svg{ width:100%; height:auto; display:block; }
+  svg text{ font-family:'Inter',ui-sans-serif,system-ui,sans-serif; }
+  /* comparison table */
+  table{ width:100%; border-collapse:collapse; font-size:17px; line-height:1.4; }
+  th,td{ text-align:left; vertical-align:top; padding:14px 16px; }
+  thead th{ font-size:15px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; padding-bottom:16px; }
+  thead th.upi{ color:var(--signal); border-bottom:3px solid var(--signal); }
+  thead th.cc{ color:var(--ink); border-bottom:3px solid var(--ink); }
+  thead th.blank{ border-bottom:3px solid transparent; }
+  tbody th{ width:19%; font-size:14px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--slate); }
+  tbody td{ width:40.5%; color:var(--ink); font-weight:500; }
+  tbody tr{ border-bottom:1px solid rgba(8,13,24,.12); }
+  tbody tr:last-child{ border-bottom:none; }
+  td b{ font-weight:800; }
+  td .sub{ display:block; margin-top:3px; font-size:14px; font-weight:500; color:var(--slate); }
+</style>
+
+<div class="card">
+
+  <div class="head-row">
+    <div class="head-copy">
+      <div class="card-eyebrow">Side by side · merchant discount rate</div>
+      <div class="card-h1">UPI MDR vs credit card MDR: same fee name, very different economics</div>
+    </div>
+    <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><g transform="matrix(7.111111111111111,0,0,7.111111111111111,-99.55555555555554,-99.55555555555554)"><g transform="rotate(0 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#2F55E8"/></g><g transform="rotate(90 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(180 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g><g transform="rotate(270 50 50)"><path d="M57.0 14.0 H19.5 A5.5 5.5 0 0 0 14.0 19.5 V41.0 H25.0 V25.0 H57.0 Z" fill="#080D18"/></g></g></svg>
+  </div>
+
+  <div class='body-block'>
+<table>
+<thead><tr><th class='blank'></th><th class='upi'>UPI MDR</th><th class='cc'>Credit card MDR</th></tr></thead>
+<tbody>
+<tr><th>Rate</th><td><b>0.4%</b> on payments above ~$23</td><td><b>~1.5-2.5%</b> from the first cent<span class='sub'>premium and corporate cards cost more</span></td></tr>
+<tr><th>Cap</th><td><b>~$3.40</b>, reached at ~$850</td><td><b>None</b></td></tr>
+<tr><th>Small tickets</th><td><b>Free</b><span class='sub'>95%+ of UPI merchant volume is below the threshold</span></td><td><b>Charged</b> on every ticket</td></tr>
+<tr><th>Special rules</th><td>Essentials (rail, telecom, fuel, insurance): flat ~$0.06. Capital markets: 0.02%, same cap</td><td>Varies by card type, MCC and network</td></tr>
+<tr><th>Who gets it</th><td>Customer's bank, payment gateway, UPI app, sponsor bank<span class='sub'>reported split</span></td><td>At 2%: issuer ~1.65%, acquirer ~0.25%, network ~0.10%</td></tr>
+<tr><th>Pays for</th><td>Processing cost; govt incentive covers ~11% of it</td><td>Rewards, interest-free float, fraud losses</td></tr>
+<tr><th>Status</th><td><b>Deferred</b> from Oct 15 to after Diwali, date TBD</td><td><b>In force</b></td></tr>
+</tbody></table>
+  </div>
+
+  <div class="footer-row">
+    <div class="wordmark">THE FINTECH ENGINEER</div>
+    <div class="signature">linkedin.com/company/the-fintech-engineer</div>
+  </div>
+
+</div>

@@ -1,0 +1,10 @@
+🚦 UPI is about to get its first MDR since 2020, but only above ~$23 and capped at ~$3.40.
+
+A credit card charges ~2% with no cap. On an $850 purchase that's ~$17 vs ~$3.40. On $2,270 it's ~$45 vs ~$3.40. NPCI has deferred the Oct 15 go-live to after Diwali, date TBD.
+
+🎯 If you build payments, treat MDR as a function of amount, MCC and instrument, and keep the go-live date in config.
+
+Full breakdown on The Fintech Engineer 👇
+linkedin.com/company/the-fintech-engineer
+
+#fintech #upi #payments #npci #mdr

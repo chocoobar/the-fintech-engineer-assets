@@ -1,0 +1,38 @@
+🚦 UPI is about to stop being free, but only above ~$23. And the fee tops out at ~$3.40. A credit card charges ~2% with no cap.
+
+💸 MDR (Merchant Discount Rate) is the fee a merchant pays on every digital payment, split between the issuing bank, the acquirer and the network. The customer never sees it.
+
+📣 What was announced: an NPCI circular (Sept 15) brings the first MDR on UPI since Jan 2020:
+- 0.4% on person-to-merchant payments above ~$23
+- Capped at ~$3.40 (the cap bites at ~$850)
+- Essentials (rail, telecom, fuel, insurance): flat ~$0.06 above the threshold
+- Capital markets: 0.02%, same cap
+- P2P stays free. Merchant pays, never the customer.
+- 95%+ of UPI merchant volume sits below the threshold, so it stays free
+Go-live was Oct 15. On Oct 13 NPCI deferred it to "immediately after Diwali", date to be notified.
+
+💳 The traditional model: credit card MDR runs ~1.5-2.5% of the ticket (premium and corporate cards cost more), with no cap. On an illustrative 2%: ~1.65% to the issuer, ~0.25% acquirer, ~0.10% network. The issuer's cut funds rewards, interest-free float and fraud losses.
+
+🧮 Same payment, two bills (UPI 0.4% vs card ~2%):
+$11 → $0 vs ~$0.22
+$114 → ~$0.45 vs ~$2.27
+$850 → ~$3.40 vs ~$17
+$2,270 → ~$3.40 vs ~$45
+
+💡 Why the gap? UPI is a push from a bank account: no credit line, no rewards, no float. And "free" was never free. The govt incentive covers only ~11% of the industry's cost (parliamentary panel), so 0.4% is a first step at closing that gap.
+
+🛠️ What it means if you build payments:
+
+1️⃣ Fee = f(amount, MCC, instrument), not one rate. UPI now needs slabs, category overrides and a cap: min(0.4% x amount, cap).
+
+2️⃣ Test the cliff. At the threshold exactly: $0. One cent over: a fee, and if it applies to the full ticket, it jumps from $0 to ~$0.09. Read the circular for which.
+
+3️⃣ Go-live is "TBD". Make rates and effective dates config, not a deploy.
+
+4️⃣ Settlement turns net. Book MDR as its own ledger line per transaction, or recon drifts. And decide: does a refund return the MDR?
+
+5️⃣ Expect ticket-splitting. Two $20 payments beat one $40. Plan the velocity rules.
+
+👇 When MDR lands on UPI, will merchants absorb it, surcharge it, or push customers back to cash?
+
+#fintech #upi #payments #npci #mdr
