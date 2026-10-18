@@ -1,0 +1,10 @@
+🚦 Green pods are not a healthy deploy.
+
+A bug that returns HTTP 200 + DECLINED sails past every readiness probe and error-rate alert. A 5% canary with an approval-rate gate catches it in ~3 minutes: ~12 wrongly declined payments instead of ~800.
+
+🎯 If you ship payment code, gate on business metrics, not just 5xx.
+
+Full trace on The Fintech Engineer 👇
+linkedin.com/company/the-fintech-engineer
+
+#fintech #kubernetes #argocd #devops #platformengineering
